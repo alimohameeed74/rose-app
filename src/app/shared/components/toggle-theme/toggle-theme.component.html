@@ -1,0 +1,7 @@
+<button
+  (click)="toggleMode()"
+  type="button"
+  class="p-2 rounded-md text-white dark:text-[#27272a] bg-(--primary-color)"
+>
+  <i class="pi" [class]="ifDark() ? 'pi-sun' : 'pi-moon'"></i>
+</button>

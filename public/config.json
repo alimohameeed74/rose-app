@@ -1,0 +1,6 @@
+{
+  "apiUrl": {
+    "devUrl": "https://rose-app.elevate-bootcamp.cloud/api",
+    "productionUrl": "https://rose-app.elevate-bootcamp.cloud/api"
+  }
+}

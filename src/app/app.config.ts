@@ -1,9 +1,16 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import {
+  ApplicationConfig,
+  inject,
+  provideAppInitializer,
+  provideBrowserGlobalErrorListeners,
+} from '@angular/core';
 import { provideRouter, withInMemoryScrolling, withViewTransitions } from '@angular/router';
 import { routes } from './app.routes';
 import Aura from '@primeuix/themes/aura';
 import { providePrimeNG } from 'primeng/config';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { ThemeService } from './core/services/theme/theme.service.js';
+import { ConfigService } from './core/services/config/config.service.js';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,9 +32,13 @@ export const appConfig: ApplicationConfig = {
         scrollPositionRestoration: 'enabled',
       }),
     ),
-    // provideAppInitializer(() => {
-    //   const configService = inject(ConfigService);
-    //   return configService.loadConfig();
-    // }),
+    provideAppInitializer(() => {
+      const themeService = inject(ThemeService);
+      return themeService.init();
+    }),
+    provideAppInitializer(() => {
+      const configService = inject(ConfigService);
+      return configService.loadConfig();
+    }),
   ],
 };

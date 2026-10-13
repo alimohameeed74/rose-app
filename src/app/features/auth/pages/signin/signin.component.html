@@ -1,0 +1,57 @@
+<div class="flex justify-between items-center max-w-lg mx-auto mb-8">
+  <h1 class="text-3xl sm:text-4xl text-(--primary-color) font-bold text-center">welcome back!</h1>
+  <app-toggle-theme></app-toggle-theme>
+</div>
+
+<form class="max-w-lg mx-auto">
+  <div class="mb-5">
+    <label
+      for="email"
+      class="block text-sm uppercase tracking-wider text-(--mode-color) mb-2 font-medium"
+      >Email</label
+    >
+    <input
+      type="email"
+      id="email"
+      name="email"
+      pInputText
+      placeholder="user@example.com"
+      class="w-full placeholder:text-(--placeholder)!"
+    />
+  </div>
+  <div class="relative">
+    <label
+      for="password"
+      class="block text-sm uppercase tracking-wider text-(--mode-color) mb-2 font-medium"
+      >Password</label
+    >
+    <input
+      [type]="hidePassword() ? 'password' : 'text'"
+      id="password"
+      name="password"
+      pInputText
+      placeholder="*********"
+      class="w-full placeholder:text-(--placeholder)!"
+    />
+    <button (click)="togglePassword()" type="button" class="absolute top-9 right-2 h-4 w-4">
+      <i class="pi text-(--placeholder)!" [class]="hidePassword() ? 'pi-eye' : 'pi-eye-slash '"></i>
+    </button>
+  </div>
+
+  <div class="text-right mb-5">
+    <a routerLink="/auth/forget-password" class="hover:underline text-(--primary-color) font-medium"
+      >forget your password?</a
+    >
+  </div>
+
+  <button type="submit" pButton class="w-full font-medium">
+    <span>Login</span>
+  </button>
+</form>
+
+<div class="mt-6 text-sm text-(--placeholder) text-center">
+  don't have an account yet?
+  <a routerLink="/auth/signup" class="hover:underline text-(--primary-color) font-medium"
+    >create one now!</a
+  >
+</div>

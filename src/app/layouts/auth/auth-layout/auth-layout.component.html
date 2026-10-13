@@ -1,0 +1,21 @@
+<div class="h-screen w-full">
+  <div class="flex w-full h-full flex-col items-center justify-center lg:flex-row">
+    <div class="w-full lg:w-1/2 p-6 lg:p-0">
+      <div class="py-8 flex flex-col items-center">
+        <div class="mb-6 max-w-xs">
+          <img src="separator.png" alt="separator" />
+        </div>
+        <div class="w-full">
+          <router-outlet></router-outlet>
+        </div>
+        <div class="mt-6 max-w-xs">
+          <img src="separator.png" alt="separator" class="rotate-180" />
+        </div>
+      </div>
+    </div>
+
+    <div class="hidden lg:block lg:w-1/2 relative h-full">
+      <img src="auth_layout_photo.png" alt="photo" class="w-full h-full object-cover" />
+    </div>
+  </div>
+</div>
