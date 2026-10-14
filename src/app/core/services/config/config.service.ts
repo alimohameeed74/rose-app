@@ -9,8 +9,8 @@ export class ConfigService {
   private httpClient = inject(HttpClient);
 
   private config: WritableSignal<any> = signal(null);
-  readonly devApiUrl_ = computed(() => this.config().apiURL.devURL);
-  readonly productionApiUrl_ = computed(() => this.config().apiURL.productionURL);
+  readonly devApiUrl_ = computed(() => this.config().apiUrl.devUrl);
+  readonly productionApiUrl_ = computed(() => this.config().apiUrl.productionUrl);
   constructor() {}
 
   loadConfig(): Observable<any> {

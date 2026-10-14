@@ -4,7 +4,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 @import 'primeicons/primeicons.css';
 
-* {
+*:not(input):not(textarea) {
   text-transform: capitalize !important;
 }
 
@@ -22,6 +22,7 @@ button:disabled {
   --mode-color: #27272a;
   --mode-bg: white;
   --placeholder: #a1a1aa;
+  --error-message-color: red;
 
   /* PrimeNg Customizations */
   /* ================================================================================================== */
@@ -46,6 +47,24 @@ button:disabled {
   --p-button-primary-focus-border-color: transparent !important;
   --p-button-primary-active-border-color: transparent !important;
 
+  /* Select Input */
+  --p-select-background: var(--mode-bg) !important;
+  --p-select-border-color: var(--primary-color) !important;
+  --p-select-hover-border-color: var(--primary-color) !important;
+  --p-select-focus-border-color: var(--primary-color) !important;
+  --p-select-color: var(--mode-color) !important;
+  --p-select-overlay-background: var(--mode-bg) !important;
+  --p-select-overlay-border-color: var(--primary-color) !important;
+  --p-select-option-selected-background: var(--primary-color) !important;
+  --p-select-option-selected-color: white !important;
+  --p-select-option-selected-focus-background: var(--primary-color) !important;
+  --p-select-option-selected-focus-color: white !important;
+  --p-select-option-color: var(--mode-color) !important;
+  --p-select-option-focus-background: transparent !important;
+  --p-select-option-focus-color: var(--mode-color) !important;
+
+  /* Dialog */
+  --p-dialog-background: var(--mode-bg) !important;
   /* ================================================================================================== */
 }
 
@@ -54,6 +73,7 @@ button:disabled {
   --mode-color: white;
   --mode-bg: #27272a;
   --placeholder: #a1a1aa;
+  --error-message-color: red;
 
   /* PrimeNg Customizations */
   /* ================================================================================================== */
@@ -78,5 +98,23 @@ button:disabled {
   --p-button-primary-focus-border-color: transparent !important;
   --p-button-primary-active-border-color: transparent !important;
 
+  /* Select Input */
+  --p-select-background: var(--mode-bg) !important;
+  --p-select-border-color: var(--primary-color) !important;
+  --p-select-hover-border-color: var(--primary-color) !important;
+  --p-select-focus-border-color: var(--primary-color) !important;
+  --p-select-color: var(--mode-color) !important;
+  --p-select-overlay-background: var(--mode-bg) !important;
+  --p-select-overlay-border-color: var(--primary-color) !important;
+  --p-select-option-selected-background: var(--primary-color) !important;
+  --p-select-option-selected-color: white !important;
+  --p-select-option-selected-focus-background: var(--primary-color) !important;
+  --p-select-option-selected-focus-color: white !important;
+  --p-select-option-color: var(--mode-color) !important;
+  --p-select-option-focus-background: transparent !important;
+  --p-select-option-focus-color: var(--mode-color) !important;
+
+  /* Dialog */
+  --p-dialog-background: var(--mode-bg) !important;
   /* ================================================================================================== */
 }

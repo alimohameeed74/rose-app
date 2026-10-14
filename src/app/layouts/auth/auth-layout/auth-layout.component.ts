@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ThemeService } from './../../../core/services/theme/theme.service';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ThemeMode } from '../../../core/enums/theme-mode.enum.js';
 
 @Component({
   selector: 'app-auth-layout',

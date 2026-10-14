@@ -1,0 +1,25 @@
+@if (dailogService.visible()) {
+  <p-dialog
+    [visible]="true"
+    [modal]="true"
+    [closable]="false"
+    [closeOnEscape]="false"
+    [dismissableMask]="false"
+    [draggable]="false"
+    [resizable]="false"
+    [style]="{ width: '400px' }"
+  >
+    <ng-template #header>
+      <span class="text-(--mode-color) font-bold text-2xl"> Session Terminated </span>
+    </ng-template>
+    <div class="flex flex-col items-center gap-4 text-center">
+      <i class="pi pi-lock text-5xl text-red-500"></i>
+
+      <p class="text-(--mode-color) font-medium">Your session has expired.</p>
+
+      <button type="button" pButton class="w-full font-medium" (click)="signout()">
+        <span> Signout</span>
+      </button>
+    </div>
+  </p-dialog>
+}
