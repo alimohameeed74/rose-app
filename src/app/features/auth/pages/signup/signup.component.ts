@@ -127,10 +127,6 @@ export class SignupComponent implements OnInit {
     return this.infoForm.get('username')!;
   }
 
-  get phoneController() {
-    return this.infoForm.get('phone')!;
-  }
-
   get passwordController() {
     return this.passwordsForm.get('password_')!;
   }
@@ -209,7 +205,7 @@ export class SignupComponent implements OnInit {
           this.messageService.add({
             severity: 'success',
             summary: 'Signedup successfully',
-            detail: 'Please login with same username & password',
+            detail: 'Please signin with same username & password',
           });
           this.resetAll();
           this.router.navigate(['/auth/signin']);
