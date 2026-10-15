@@ -82,7 +82,7 @@ export class SignupComponent implements OnInit {
       ],
       confirmPassword: ['', Validators.required],
     },
-    { validators: passwordMatch },
+    { validators: passwordMatch('password_', 'confirmPassword') },
   );
 
   // Register Form

@@ -11,6 +11,8 @@ import { ApiResponse } from '../../../core/models/api-response.js';
 import { AuthResponse, User } from '../models/response/auth-response.js';
 import { LoggedUserData } from '../models/store/logged-user-data.js';
 import { Router } from '@angular/router';
+import { ForgetPassword } from '../models/request/forget-password.js';
+import { ResetPassword } from '../models/request/reset-password.js';
 
 @Injectable({
   providedIn: 'root',
@@ -52,8 +54,18 @@ export class AuthService {
     );
   }
 
-  forgetPassword() {}
-  resetPassword() {}
+  forgetPassword(data: ForgetPassword): Observable<VerifyEmail> {
+    return this.httpClient.post<VerifyEmail>(
+      `${this.configService.devApiUrl_()}/auth/forgot-password`,
+      data,
+    );
+  }
+  resetPassword(data: ResetPassword): Observable<VerifyEmail> {
+    return this.httpClient.post<VerifyEmail>(
+      `${this.configService.devApiUrl_()}/auth/reset-password`,
+      data,
+    );
+  }
   signout() {
     this.setUser(null, false);
     sessionStorage.removeItem('roseToken');

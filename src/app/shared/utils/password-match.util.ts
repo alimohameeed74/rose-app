@@ -1,8 +1,10 @@
-import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
-export function passwordMatch(control: AbstractControl): ValidationErrors | null {
-  const password = control.get('password_')?.value;
-  const confirmPassword = control.get('confirmPassword')?.value;
+export function passwordMatch(formControlOne: string, formControlTwo: string): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const password = control.get(formControlOne)?.value;
+    const confirmPassword = control.get(formControlTwo)?.value;
 
-  return password === confirmPassword ? null : { passwordMismatch: true };
+    return password === confirmPassword ? null : { passwordMismatch: true };
+  };
 }
