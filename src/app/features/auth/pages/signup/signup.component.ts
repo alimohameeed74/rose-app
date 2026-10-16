@@ -146,9 +146,10 @@ export class SignupComponent implements OnInit {
 
           this.messageService.add({
             severity: 'success',
-            summary: 'Completed successfully',
+            summary: 'Completed successfully.',
             detail: res.message,
           });
+          this.resetOtpForm();
           this.increaseStep();
         },
         error: (err) => {
@@ -169,9 +170,10 @@ export class SignupComponent implements OnInit {
           this.otpLoading.set(false);
           this.messageService.add({
             severity: 'success',
-            summary: 'Completed successfully',
+            summary: 'Completed successfully.',
             detail: res.message,
           });
+          this.reserInfoForm();
           this.increaseStep();
         },
         error: (err) => {
@@ -181,6 +183,7 @@ export class SignupComponent implements OnInit {
   }
 
   submitInfo() {
+    this.resetPasswordsForm();
     this.increaseStep();
   }
   submitPassword() {
@@ -204,8 +207,8 @@ export class SignupComponent implements OnInit {
           this.passwordLoading.set(false);
           this.messageService.add({
             severity: 'success',
-            summary: 'Signedup successfully',
-            detail: 'Please signin with same username & password',
+            summary: 'Signedup successfully.',
+            detail: 'Please signin with same username & password.',
           });
           this.resetAll();
           this.router.navigate(['/auth/signin']);
@@ -221,6 +224,7 @@ export class SignupComponent implements OnInit {
   }
 
   decreaseStep() {
+    this.resetAll();
     this.step.set(this.step() - 1);
   }
 

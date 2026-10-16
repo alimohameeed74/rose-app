@@ -1,0 +1,10 @@
+:host ::ng-deep p-progress-spinner svg path,
+:host ::ng-deep p-progress-spinner circle {
+  stroke: white !important;
+}
+
+:host ::ng-deep p-progress-spinner,
+:host ::ng-deep p-progress-spinner svg {
+  width: 60px !important;
+  height: 60px !important;
+}

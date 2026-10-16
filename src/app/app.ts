@@ -1,12 +1,13 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ToastModule, Toast } from 'primeng/toast';
+import { Toast } from 'primeng/toast';
 import { AuthService } from './features/auth/services/auth.service.js';
 import { AttentionDialogComponent } from './shared/components/attention-dialog/attention-dialog.component';
+import { LoaderComponent } from './shared/components/loader/loader.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Toast, AttentionDialogComponent],
+  imports: [RouterOutlet, Toast, AttentionDialogComponent, LoaderComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

@@ -1,5 +1,7 @@
 <div class="flex justify-between items-center max-w-lg mx-auto mb-8">
-  <h1 class="text-3xl sm:text-4xl text-(--primary-color) font-bold text-center">welcome back!</h1>
+  <h1 class="text-3xl sm:text-4xl text-(--primary-color) font-bold text-center">
+    welcome<span class="hidden sm:inline"> back</span>!
+  </h1>
   <app-toggle-theme></app-toggle-theme>
 </div>
 
@@ -71,9 +73,9 @@
   </button>
 </form>
 
-<div class="mt-6 text-sm text-(--placeholder) text-center">
+<div class="mt-6 text-sm text-(--mode-color) text-center">
   don't have an account yet?
   <a routerLink="/auth/signup" class="hover:underline text-(--primary-color) font-medium"
-    >create one now!</a
+    >create<span class="hidden sm:inline"> one now</span>!</a
   >
 </div>

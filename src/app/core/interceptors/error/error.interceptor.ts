@@ -17,7 +17,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       };
       messageService.add({
         severity: 'error',
-        summary: 'Something went wrong',
+        summary: 'Something went wrong.',
         detail: customError.message,
       });
 

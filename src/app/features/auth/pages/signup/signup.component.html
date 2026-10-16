@@ -1,6 +1,6 @@
 <div class="flex justify-between items-center max-w-lg mx-auto mb-8">
   <h1 class="text-3xl sm:text-4xl text-(--primary-color) font-bold text-center">
-    create new account!
+    create<span class="hidden sm:inline"> new</span> account!
   </h1>
   <app-toggle-theme></app-toggle-theme>
 </div>
@@ -75,8 +75,8 @@
               </span>
             </button>
 
-            <div class="text-center mb-5">
-              <span class="me-1">already have an account?</span>
+            <div class="text-center mb-5 text-(--mode-color)">
+              <span>already have an account?</span>
               <a
                 routerLink="/auth/signin"
                 class="hover:underline text-(--primary-color) font-medium"
@@ -126,18 +126,6 @@
                 Verify OTP
               </span>
             </button>
-
-            <div class="text-center mt-5">
-              <span class="text-sm text-(--placeholder)">Didn't receive the code?</span>
-
-              <button
-                type="button"
-                class="ms-2 text-(--primary-color) font-medium hover:underline"
-                [disabled]="otpLoading()"
-              >
-                Resend OTP
-              </button>
-            </div>
           </form>
         }
 

@@ -34,7 +34,6 @@ export class ForgetPasswordComponent implements OnInit {
 
   emailLoading: WritableSignal<boolean> = signal(false);
   step: WritableSignal<number> = signal(1);
-  tokenParam: WritableSignal<string> = signal('');
   passwordLoading: WritableSignal<boolean> = signal(false);
   hidePassword: WritableSignal<boolean> = signal(true);
   hidePassword_: WritableSignal<boolean> = signal(true);
@@ -69,9 +68,8 @@ export class ForgetPasswordComponent implements OnInit {
       const token = param.get('token');
 
       if (token) {
-        this.tokenParam.set(token);
         this.passwordsForm.patchValue({
-          token: this.tokenParam(),
+          token: token,
         });
         this.step.set(3);
       }
@@ -101,7 +99,7 @@ export class ForgetPasswordComponent implements OnInit {
 
           this.messageService.add({
             severity: 'success',
-            summary: 'Completed successfully',
+            summary: 'Completed successfully.',
             detail: res.message,
           });
           this.increaseStep();
@@ -122,7 +120,7 @@ export class ForgetPasswordComponent implements OnInit {
 
           this.messageService.add({
             severity: 'success',
-            summary: 'Completed successfully',
+            summary: 'Completed successfully.',
             detail: res.message,
           });
           this.resetAll();

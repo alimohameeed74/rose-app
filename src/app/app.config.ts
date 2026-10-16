@@ -16,6 +16,7 @@ import { errorInterceptor } from './core/interceptors/error/error.interceptor.js
 import { retryInterceptor } from './core/interceptors/retry/retry.interceptor.js';
 import { MessageService } from 'primeng/api';
 import { AuthService } from './features/auth/services/auth.service.js';
+import { loadingInterceptor } from './core/interceptors/loading/loading.interceptor.js';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,7 +31,7 @@ export const appConfig: ApplicationConfig = {
     }),
     provideHttpClient(
       withFetch(),
-      withInterceptors([authInterceptor, errorInterceptor, retryInterceptor]),
+      withInterceptors([authInterceptor, errorInterceptor, retryInterceptor, loadingInterceptor]),
     ),
     provideBrowserGlobalErrorListeners(),
     provideRouter(
