@@ -4,7 +4,7 @@ import { guestGuard } from './core/guards/guest/guest.guard.js';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'main',
     pathMatch: 'full',
   },
   {
@@ -15,9 +15,10 @@ export const routes: Routes = [
     loadChildren: () => import('./features/auth/auth.routes').then((r) => r.routes),
   },
   {
-    path: 'home',
+    path: 'main',
     loadComponent: () =>
-      import('./features/home/home/pages/home/home.component').then((p) => p.HomeComponent),
+      import('./layouts/home/home-layout/home-layout.component').then((p) => p.HomeLayoutComponent),
+    loadChildren: () => import('./features/home/home.routes').then((r) => r.routes),
   },
   //   {
   //     path: 'admin',

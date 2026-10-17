@@ -90,6 +90,8 @@ export class SigninComponent implements OnInit {
       summary: 'signedin successfully.',
       detail: 'Welcome to Rose app.',
     });
+    // check about user.role to decide whether navigate to home layout,
+    // or admin layout
     this.router.navigate(['/']);
   }
 }

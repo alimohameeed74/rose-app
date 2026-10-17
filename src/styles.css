@@ -68,6 +68,16 @@ button:disabled {
 
   /* Toaster */
   --p-toast-width: 18rem !important;
+
+  /* Menu */
+  --p-menu-background: var(--mode-bg) !important;
+  --p-menu-color: var(--mode-color) !important;
+  --p-menu-border-color: rgba(161, 161, 170, 0.2) !important;
+  --p-menu-item-focus-background: rgba(166, 37, 42, 0.08) !important;
+  --p-menu-item-focus-color: var(--primary-color) !important;
+  --p-menu-item-color: var(--mode-color) !important;
+  --p-menu-item-icon-color: var(--placeholder) !important;
+  --p-menu-item-icon-focus-color: var(--primary-color) !important;
   /* ================================================================================================== */
 }
 
@@ -119,5 +129,15 @@ button:disabled {
 
   /* Dialog */
   --p-dialog-background: var(--mode-bg) !important;
+
+  /* Menu */
+  --p-menu-background: var(--mode-bg) !important;
+  --p-menu-color: var(--mode-color) !important;
+  --p-menu-border-color: rgba(161, 161, 170, 0.2) !important;
+  --p-menu-item-focus-background: rgba(255, 163, 185, 0.08) !important;
+  --p-menu-item-focus-color: var(--primary-color) !important;
+  --p-menu-item-color: var(--mode-color) !important;
+  --p-menu-item-icon-color: var(--placeholder) !important;
+  --p-menu-item-icon-focus-color: var(--primary-color) !important;
   /* ================================================================================================== */
 }

@@ -1,0 +1,185 @@
+<nav class="fixed top-0 left-0 w-full z-50 bg-(--mode-bg) text-(--mode-color) shadow-md">
+  <div class="px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20 gap-4">
+      <div class="shrink-0 cursor-pointer">
+        <img src="logo.ico" alt="App Logo" class="h-14 sm:h-16 w-auto object-contain" />
+      </div>
+
+      <div class="hidden lg:flex justify-center items-center gap-x-8 py-2.5 px-4">
+        <a
+          href="/Home"
+          class="group relative flex items-center gap-2 text-sm font-medium py-1 hover:text-(--primary-color)"
+        >
+          <i class="pi pi-home text-base"></i>
+          <span>Home</span>
+          <span
+            class="absolute bottom-0 left-0 w-0 h-0.5 bg-(--primary-color) group-hover:w-full"
+          ></span>
+        </a>
+
+        <a
+          href="/Products"
+          class="group relative flex items-center gap-2 text-sm font-medium py-1 hover:text-(--primary-color)"
+        >
+          <i class="pi pi-box text-base"></i>
+          <span>Products</span>
+          <span
+            class="absolute bottom-0 left-0 w-0 h-0.5 bg-(--primary-color) group-hover:w-full"
+          ></span>
+        </a>
+
+        <a
+          href="/Categories"
+          class="group relative flex items-center gap-2 text-sm font-medium py-1 hover:text-(--primary-color)"
+        >
+          <i class="pi pi-th-large text-base"></i>
+          <span>Categories</span>
+          <span
+            class="absolute bottom-0 left-0 w-0 h-0.5 bg-(--primary-color) group-hover:w-full"
+          ></span>
+        </a>
+
+        <a
+          href="/Occasions"
+          class="group relative flex items-center gap-2 text-sm font-medium py-1 hover:text-(--primary-color)"
+        >
+          <i class="pi pi-star text-base"></i>
+          <span>Occasions</span>
+          <span
+            class="absolute bottom-0 left-0 w-0 h-0.5 bg-(--primary-color) group-hover:w-full"
+          ></span>
+        </a>
+
+        <a
+          href="/Contact"
+          class="group relative flex items-center gap-2 text-sm font-medium py-1 hover:text-(--primary-color)"
+        >
+          <i class="pi pi-phone text-base"></i>
+          <span>Contact</span>
+          <span
+            class="absolute bottom-0 left-0 w-0 h-0.5 bg-(--primary-color) group-hover:w-full"
+          ></span>
+        </a>
+
+        <a
+          href="/About"
+          class="group relative flex items-center gap-2 text-sm font-medium py-1 hover:text-(--primary-color)"
+        >
+          <i class="pi pi-info-circle text-base"></i>
+          <span>About</span>
+          <span
+            class="absolute bottom-0 left-0 w-0 h-0.5 bg-(--primary-color) group-hover:w-full"
+          ></span>
+        </a>
+      </div>
+
+      <div class="flex items-center gap-4 text-(--mode-color)">
+        @if (!authService.isUserlogged_()) {
+          <div
+            (click)="login()"
+            class="flex items-center gap-1.5 cursor-pointer hover:text-(--primary-color) transition-colors"
+          >
+            <i class="pi pi-user text-lg"></i>
+            <span class="text-sm font-medium">Signin</span>
+          </div>
+        } @else {
+          <div class="relative">
+            <button
+              type="button"
+              (click)="menu.toggle($event)"
+              class="flex items-center gap-2 cursor-pointer hover:text-(--primary-color) font-medium text-sm"
+            >
+              <span
+                >Hello
+                <span class="hidden sm:inline"
+                  >, {{ authService.loggedUserData_()?.username }}</span
+                ></span
+              >
+              <i class="pi pi-chevron-down text-xs"></i>
+            </button>
+
+            <p-menu #menu appendTo="body" [model]="userMenuItems()" [popup]="true"></p-menu>
+          </div>
+        }
+
+        <div class="h-6 w-px bg-(--placeholder)/30"></div>
+
+        <div class="relative cursor-pointer hover:text-(--primary-color)">
+          <i class="pi pi-heart text-lg!"></i>
+          @if (authService.isUserlogged_()) {
+            <span
+              class="absolute -top-1.5 -right-1.5 bg-(--primary-color) text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center"
+              >0</span
+            >
+          }
+        </div>
+
+        <div class="relative cursor-pointer hover:text-(--primary-color)">
+          <i class="pi pi-shopping-cart text-lg!"></i>
+          @if (authService.isUserlogged_()) {
+            <span
+              class="absolute -top-1.5 -right-1.5 bg-(--primary-color) text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center"
+              >1</span
+            >
+          }
+        </div>
+
+        <app-toggle-theme></app-toggle-theme>
+      </div>
+
+      <div class="flex lg:hidden">
+        <button (click)="toggleMobileMenu()" class="text-(--mode-color) p-2 cursor-pointer">
+          <i
+            [class]="isMenuOpen() ? 'pi pi-times' : 'pi pi-bars'"
+            class="text-xl transition-transform"
+          ></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  @if (isMenuOpen()) {
+    <div
+      class="lg:hidden bg-(--mode-bg) border-t border-(--placeholder)/20 px-4 sm:px-6 lg:px-8 pt-3 pb-5 space-y-3 shadow-lg"
+    >
+      <div class="flex flex-col space-y-2">
+        <a
+          href="/Home"
+          class="flex items-center gap-2 py-2 text-sm font-medium hover:text-(--primary-color)"
+        >
+          <i class="pi pi-home text-base"></i><span>Home</span>
+        </a>
+        <a
+          href="/Products"
+          class="flex items-center gap-2 py-2 text-sm font-medium hover:text-(--primary-color)"
+        >
+          <i class="pi pi-box text-base"></i><span>Products</span>
+        </a>
+        <a
+          href="/Categories"
+          class="flex items-center gap-2 py-2 text-sm font-medium hover:text-(--primary-color)"
+        >
+          <i class="pi pi-th-large text-base"></i><span>Categories</span>
+        </a>
+        <a
+          href="/Occasions"
+          class="flex items-center gap-2 py-2 text-sm font-medium hover:text-(--primary-color)"
+        >
+          <i class="pi pi-star text-base"></i><span>Occasions</span>
+        </a>
+        <a
+          href="/Contact"
+          class="flex items-center gap-2 py-2 text-sm font-medium hover:text-(--primary-color)"
+        >
+          <i class="pi pi-phone text-base"></i><span>Contact</span>
+        </a>
+        <a
+          href="/About"
+          class="flex items-center gap-2 py-2 text-sm font-medium hover:text-(--primary-color)"
+        >
+          <i class="pi pi-info-circle text-base"></i><span>About</span>
+        </a>
+      </div>
+    </div>
+  }
+</nav>
