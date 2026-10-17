@@ -2,13 +2,13 @@ import { Component, computed, inject, OnInit, signal, WritableSignal } from '@an
 import { ToggleThemeComponent } from '../../shared/components/toggle-theme/toggle-theme.component';
 import { AuthService } from '../../features/auth/services/auth.service.js';
 import { Menu } from 'primeng/menu';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
-  imports: [ToggleThemeComponent, Menu, ToggleThemeComponent],
+  imports: [ToggleThemeComponent, Menu, ToggleThemeComponent, RouterLink, RouterLinkActive],
 })
 export class HeaderComponent implements OnInit {
   authService = inject(AuthService);
