@@ -78,6 +78,15 @@ button:disabled {
   --p-menu-item-color: var(--mode-color) !important;
   --p-menu-item-icon-color: var(--placeholder) !important;
   --p-menu-item-icon-focus-color: var(--primary-color) !important;
+
+  /* Card */
+  --p-card-background: var(--mode-bg) !important;
+  --p-card-subtitle-color: var(--placeholder) !important;
+  --p-card-shadow: 0 0 0 1px rgba(166, 37, 42, 0.1), 0 2px 6px rgba(0, 0, 0, 0.06) !important;
+
+  /* Skeleton Loaders */
+  --p-skeleton-background: #e4e4e7 !important;
+  --p-skeleton-animation-background: #f4f4f5 !important;
   /* ================================================================================================== */
 }
 
@@ -139,5 +148,14 @@ button:disabled {
   --p-menu-item-color: var(--mode-color) !important;
   --p-menu-item-icon-color: var(--placeholder) !important;
   --p-menu-item-icon-focus-color: var(--primary-color) !important;
+
+  /* Card */
+  --p-card-background: var(--mode-bg) !important;
+  --p-card-subtitle-color: var(--placeholder) !important;
+  --p-card-shadow: 0 0 0 1px rgba(255, 163, 185, 0.12), 0 2px 6px rgba(0, 0, 0, 0.25) !important;
+
+  /* Skeleton Loaders */
+  --p-skeleton-background: #3f3f46 !important;
+  --p-skeleton-animation-background: #52525b !important;
   /* ================================================================================================== */
 }

@@ -1,0 +1,25 @@
+<p-card>
+  <ng-template #header>
+    <div class="h-52 rounded-xl overflow-hidden">
+      <p-skeleton width="100%" height="13rem" />
+    </div>
+  </ng-template>
+
+  <ng-template #title>
+    <p-skeleton width="65%" height="1.5rem" />
+  </ng-template>
+
+  <ng-template #subtitle>
+    <p-skeleton width="100%" height="0.875rem" />
+    <p-skeleton width="75%" height="0.875rem" styleClass="mt-2" />
+  </ng-template>
+
+  <div class="flex items-center gap-2 pt-4 my-3">
+    <p-skeleton shape="circle" size="1rem" />
+    <p-skeleton width="55%" height="0.75rem" />
+  </div>
+
+  <ng-template #footer>
+    <p-skeleton width="100%" height="2.75rem" borderRadius="0.5rem" />
+  </ng-template>
+</p-card>

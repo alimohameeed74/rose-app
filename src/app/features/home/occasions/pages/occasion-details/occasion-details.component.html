@@ -1,0 +1,110 @@
+<div class="bg-(--mode-bg) py-6">
+  <div class="mx-auto max-w-6xl">
+    <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h1 class="text-4xl font-bold text-(--mode-color) sm:text-3xl">Occasion Details</h1>
+
+        <p class="mt-2 text-sm text-(--placeholder) sm:text-base">
+          View and manage your occasion information.
+        </p>
+      </div>
+
+      <button
+        pButton
+        type="button"
+        label="Back to Occasions"
+        icon="pi pi-arrow-left"
+        class="w-full sm:w-auto"
+        (click)="BackToOccasions()"
+      ></button>
+    </div>
+
+    @if (occasion() && !isLoading()) {
+      <p-card styleClass="overflow-hidden">
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+          <div class="min-w-0">
+            <div class="overflow-hidden rounded-xl border border-(--placeholder)/20 bg-(--mode-bg)">
+              <img
+                [src]="occasion()?.image ?? 'logo.ico'"
+                [alt]="occasion()?.title"
+                class="aspect-4/3 w-full object-cover sm:aspect-video md:aspect-4/5 lg:aspect-5/4"
+              />
+            </div>
+          </div>
+
+          <div class="flex min-w-0 flex-col justify-center gap-6">
+            <div class="flex flex-wrap items-center gap-3">
+              <p-tag
+                [value]="occasion()?.immutable ? 'Immutable' : 'Editable'"
+                [severity]="occasion()?.immutable ? 'secondary' : 'success'"
+                [rounded]="true"
+              />
+            </div>
+
+            <div>
+              <span
+                class="mb-2 block text-sm font-medium uppercase tracking-wider text-(--placeholder)"
+              >
+                Title
+              </span>
+
+              <h2 class="text-2xl font-bold leading-tight text-(--mode-color) sm:text-3xl">
+                {{ occasion()?.title }}
+              </h2>
+            </div>
+
+            <div>
+              <h3 class="mb-2 text-base font-semibold text-(--mode-color)">Description</h3>
+
+              <p class="text-sm leading-7 text-(--placeholder) sm:text-base">
+                {{ occasion()?.description || 'No description available.' }}
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div class="rounded-xl border border-(--placeholder)/20 p-4">
+                <div class="mb-2 flex items-center gap-2">
+                  <i class="pi pi-calendar text-(--primary-color)"></i>
+
+                  <span class="text-sm font-medium text-(--placeholder)"> Created At </span>
+                </div>
+
+                <p class="text-sm font-semibold text-(--mode-color)">
+                  {{ occasion()?.createdAt | date: 'mediumDate' }}
+                </p>
+
+                <p class="mt-1 text-xs text-(--placeholder)">
+                  {{ occasion()?.createdAt | date: 'shortTime' }}
+                </p>
+              </div>
+
+              <div class="rounded-xl border border-(--placeholder)/20 p-4">
+                <div class="mb-2 flex items-center gap-2">
+                  <i class="pi pi-clock text-(--primary-color)"></i>
+
+                  <span class="text-sm font-medium text-(--placeholder)"> Last Updated </span>
+                </div>
+
+                <p class="text-sm font-semibold text-(--mode-color)">
+                  {{ occasion()?.updatedAt | date: 'mediumDate' }}
+                </p>
+
+                <p class="mt-1 text-xs text-(--placeholder)">
+                  {{ occasion()?.updatedAt | date: 'shortTime' }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </p-card>
+    } @else if (isLoading()) {
+      <app-occasion-details-loader></app-occasion-details-loader>
+    } @else if (!occasion()) {
+      <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">
+        <i class="pi pi-exclamation-circle text-4xl! text-(--placeholder)! mb-4"></i>
+
+        <h3 class="text-lg font-semibold text-(--mode-color)">No occasion found</h3>
+      </div>
+    }
+  </div>
+</div>

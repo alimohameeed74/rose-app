@@ -1,0 +1,37 @@
+<p-card>
+  <ng-template #header>
+    <div class="relative h-52 rounded-xl overflow-hidden bg-(--mode-bg)">
+      <img
+        [src]="occasion().image ?? 'logo.ico'"
+        [alt]="occasion().title"
+        class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+      />
+    </div>
+  </ng-template>
+
+  <ng-template #title>
+    <h2 class="text-lg font-bold text-(--mode-color)">{{ occasion().title }}.</h2>
+  </ng-template>
+
+  <ng-template #subtitle>
+    <p class="text-sm text-(--placeholder) mt-1">{{ occasion().description }}.</p>
+  </ng-template>
+
+  <div
+    class="flex items-center gap-2 text-xs text-(--placeholder) border-t border-(--placeholder) pt-4 my-3"
+  >
+    <i class="pi pi-calendar text-(--primary-color)"></i>
+    <span>Last Updated: {{ occasion().updatedAt | date }}.</span>
+  </div>
+
+  <ng-template #footer>
+    <button
+      (click)="viewDetails(occasion().id)"
+      icon="pi pi-eye"
+      class="w-full font-medium"
+      pButton
+    >
+      View Details
+    </button>
+  </ng-template>
+</p-card>

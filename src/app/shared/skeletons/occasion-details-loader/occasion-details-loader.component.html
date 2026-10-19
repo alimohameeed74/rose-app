@@ -1,0 +1,51 @@
+<p-card styleClass="overflow-hidden">
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+    <div class="min-w-0">
+      <div class="overflow-hidden rounded-xl border border-(--placeholder)/20 bg-(--mode-bg)">
+        <p-skeleton
+          styleClass="aspect-4/3! h-[330px]! w-full sm:aspect-video! md:aspect-4/5! lg:aspect-5/4!"
+        />
+      </div>
+    </div>
+
+    <div class="flex min-w-0 flex-col justify-center gap-6">
+      <div class="flex flex-wrap items-center gap-3">
+        <p-skeleton width="90px" height="1.75rem" borderRadius="1rem" />
+      </div>
+
+      <div>
+        <p-skeleton width="55px" height="0.875rem" styleClass="mb-3" />
+        <p-skeleton width="85%" height="2rem" />
+      </div>
+
+      <div>
+        <p-skeleton width="100px" height="1.125rem" styleClass="mb-3" />
+        <p-skeleton width="100%" height="0.875rem" styleClass="mb-2" />
+        <p-skeleton width="95%" height="0.875rem" styleClass="mb-2" />
+        <p-skeleton width="70%" height="0.875rem" />
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div class="rounded-xl border border-(--placeholder)/20 p-4">
+          <div class="mb-3 flex items-center gap-2">
+            <p-skeleton shape="circle" size="1rem" />
+            <p-skeleton width="75px" height="0.875rem" />
+          </div>
+
+          <p-skeleton width="85%" height="1rem" styleClass="mb-2" />
+          <p-skeleton width="55%" height="0.75rem" />
+        </div>
+
+        <div class="rounded-xl border border-(--placeholder)/20 p-4">
+          <div class="mb-3 flex items-center gap-2">
+            <p-skeleton shape="circle" size="1rem" />
+            <p-skeleton width="85px" height="0.875rem" />
+          </div>
+
+          <p-skeleton width="85%" height="1rem" styleClass="mb-2" />
+          <p-skeleton width="55%" height="0.75rem" />
+        </div>
+      </div>
+    </div>
+  </div>
+</p-card>

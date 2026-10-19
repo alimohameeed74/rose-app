@@ -17,8 +17,7 @@ export const routes: Route[] = [
   },
   {
     path: 'occasions',
-    loadComponent: () =>
-      import('./occasions/pages/occasions/occasions.component').then((p) => p.OccasionsComponent),
+    loadChildren: () => import('./occasions/accoasions.routes').then((r) => r.routes),
   },
   {
     path: 'categories',
