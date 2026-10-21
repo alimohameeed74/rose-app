@@ -21,10 +21,7 @@ export const routes: Route[] = [
   },
   {
     path: 'categories',
-    loadComponent: () =>
-      import('./categories/pages/categories/categories.component').then(
-        (p) => p.CategoriesComponent,
-      ),
+    loadChildren: () => import('./categories/categories.routes').then((r) => r.routes),
   },
   {
     path: 'contact',
