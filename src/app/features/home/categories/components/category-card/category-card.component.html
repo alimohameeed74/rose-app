@@ -1,0 +1,54 @@
+<p-card>
+  <div class="mb-4 h-48 overflow-hidden rounded-xl bg-(--surface-ground)">
+    <img
+      [src]="category().image ?? 'logo.ico'"
+      [alt]="category().title"
+      class="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+    />
+  </div>
+
+  <ng-template #title>
+    <div class="flex items-start justify-between gap-3">
+      <h3 class="text-lg font-semibold text-(--mode-color)">
+        {{ category().title }}
+      </h3>
+
+      <p-tag
+        [value]="category().immutable ? 'Immutable' : 'Editable'"
+        [severity]="category().immutable ? 'warn' : 'success'"
+      />
+    </div>
+  </ng-template>
+
+  <p class="mb-4 line-clamp-2 min-h-10 text-sm text-(--placeholder)">
+    {{ category().description || 'No description available' }}
+  </p>
+
+  <div class="flex flex-wrap items-center gap-4 text-sm text-(--mode-color)">
+    <div class="flex items-center gap-2">
+      <i class="pi pi-sitemap text-(--primary-color)"></i>
+      <span>{{ category().subCategories.length }} Subcategories</span>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <i class="pi pi-box text-(--primary-color)"></i>
+      <span>{{ category()._count.products }} Products</span>
+    </div>
+  </div>
+
+  <ng-template #footer>
+    <div class="flex items-center justify-between gap-3 border-t border-(--surface-border) pt-3">
+      <span class="text-xs text-(--placeholder)">
+        {{ category().createdAt | date: 'mediumDate' }}
+      </span>
+
+      <button
+        (click)="goToDetails(category().id)"
+        label="View Details"
+        icon="pi pi-eye"
+        pButton
+        size="small"
+      ></button>
+    </div>
+  </ng-template>
+</p-card>

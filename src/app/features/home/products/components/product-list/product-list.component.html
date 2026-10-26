@@ -1,0 +1,11 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+  @for (product of products(); track product.id) {
+    <app-product-card [product]="product"></app-product-card>
+  } @empty {
+    <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">
+      <i class="pi pi-exclamation-circle text-4xl! text-(--placeholder)! mb-4"></i>
+
+      <h3 class="text-lg font-semibold text-(--mode-color)">No Products found</h3>
+    </div>
+  }
+</div>

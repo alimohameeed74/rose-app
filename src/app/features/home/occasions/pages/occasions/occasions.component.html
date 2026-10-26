@@ -1,25 +1,23 @@
-<div class="py-6">
-  <div class="mb-8">
-    <h1 class="text-4xl font-bold text-(--mode-color)">Occasions</h1>
+<div class="mb-8">
+  <h1 class="text-4xl font-bold text-(--mode-color)">Occasions</h1>
 
-    <p class="text-sm text-(--placeholder) mt-1">Manage your seasonal occasions and campaigns</p>
-  </div>
+  <p class="text-sm text-(--placeholder) mt-1">Manage your seasonal occasions and campaigns</p>
+</div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-    @if (isLoading()) {
-      @for (item of [1, 2, 3]; track $index) {
-        <app-occasion-card-loader></app-occasion-card-loader>
-      }
-    } @else {
-      @for (occasion of occasions(); track occasion.id) {
-        <app-occasion-card [occasion]="occasion"></app-occasion-card>
-      } @empty {
-        <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">
-          <i class="pi pi-exclamation-circle text-4xl! text-(--placeholder)! mb-4"></i>
-
-          <h3 class="text-lg font-semibold text-(--mode-color)">No occasions found</h3>
-        </div>
-      }
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+  @if (isLoading()) {
+    @for (item of [1, 2, 3]; track $index) {
+      <app-occasion-card-loader></app-occasion-card-loader>
     }
-  </div>
+  } @else {
+    @for (occasion of occasions(); track occasion.id) {
+      <app-occasion-card [occasion]="occasion"></app-occasion-card>
+    } @empty {
+      <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">
+        <i class="pi pi-exclamation-circle text-4xl! text-(--placeholder)! mb-4"></i>
+
+        <h3 class="text-lg font-semibold text-(--mode-color)">No occasions found</h3>
+      </div>
+    }
+  }
 </div>

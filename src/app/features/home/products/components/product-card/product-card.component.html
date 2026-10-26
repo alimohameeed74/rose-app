@@ -1,0 +1,95 @@
+<p-card styleClass="product-card overflow-hidden border-0 shadow-none">
+  <div class="relative overflow-hidden rounded-2xl">
+    <img
+      [src]="product().cover || 'logo.ico'"
+      [alt]="product().title"
+      class="h-75 w-full object-cover"
+    />
+
+    <button
+      type="button"
+      title="Add to whishlist"
+      class="absolute size-10 inset-s-4 top-4 flex items-center justify-center gap-2 rounded-full bg-(--mode-bg) px-4 py-3 text-sm font-medium text-(--primary-color) shadow-sm"
+    >
+      <i class="pi pi-heart text-xl"></i>
+    </button>
+
+    @if (product().stock <= 0) {
+      <span
+        class="absolute text-xs inset-e-4 top-4 rounded-full bg-(--mode-bg) px-4 py-1 font-semibold text-(--mode-color)"
+      >
+        OUT OF STOCK
+      </span>
+    }
+
+    @if (
+      product().discountType === 'PERCENT' &&
+      product().discountValue &&
+      product().discountValue !== '0'
+    ) {
+      <p-tag
+        [value]="'-' + product().discountValue + '%'"
+        severity="danger"
+        styleClass="absolute bottom-4 inset-s-4"
+      />
+    }
+  </div>
+
+  <div class="relative flex flex-col gap-3 px-1 pb-2 pt-5">
+    <h3 class="m-0 line-clamp-1 text-xl font-semibold leading-7 text-(--primary-color)">
+      {{ product().title }}
+    </h3>
+
+    <div class="flex items-center gap-1">
+      @for (star of [1, 2, 3, 4, 5]; track $index) {
+        <i
+          class="pi text-xl text-amber-500"
+          [class.pi-star-fill]="star <= product().rating"
+          [class.pi-star]="star > product().rating"
+        ></i>
+      }
+    </div>
+
+    <div class="flex flex-wrap items-center gap-2 pe-14">
+      @if (
+        product().discountType === 'PERCENT' &&
+        product().discountValue &&
+        product().discountValue !== '0'
+      ) {
+        <span class="text-xl font-medium text-(--primary-color)">
+          {{ +product().price * (1 - +product().discountValue / 100) | currency: 'EGP ' }}
+        </span>
+
+        <span class="text-lg text-(--placeholder) line-through">
+          {{ +product().price | currency: 'EGP ' }}
+        </span>
+      } @else {
+        <span class="text-xl font-medium text-(--primary-color)">
+          {{ +product().price | currency: 'EGP ' }}
+        </span>
+      }
+    </div>
+    <div class="flex justify-between items-center">
+      <button
+        type="button"
+        pButton
+        title="Add to cart"
+        [disabled]="product().stock <= 0"
+        class="absolute bottom-0 inset-e-0 flex size-8 items-center justify-center rounded-full bg-(--primary-color)"
+        aria-label="Add to cart"
+      >
+        <i class="pi pi-shopping-cart text-3xl"></i>
+      </button>
+      <button
+        type="button"
+        (click)="viewDetails(product().id)"
+        pButton
+        title="View details"
+        class="absolute bottom-0 inset-e-0 flex size-8 items-center justify-center rounded-full bg-(--primary-color)"
+        aria-label="View details"
+      >
+        <i class="pi pi-eye text-3xl"></i>
+      </button>
+    </div>
+  </div>
+</p-card>

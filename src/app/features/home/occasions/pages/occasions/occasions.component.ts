@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 
 import { Occasion } from '../../models/occasion.js';
 import { OccasionCardComponent } from '../../components/occasion-card/occasion-card.component';
-import { OccasionCardLoaderComponent } from '../../../../../shared/skeletons/occasion-card-loader/occasion-card-loader.component';
+import { OccasionCardLoaderComponent } from '../../../../../shared/skeletons/occasion/occasion-card-loader/occasion-card-loader.component.js';
 import { OccasionService } from '../../services/occasion.service.js';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 

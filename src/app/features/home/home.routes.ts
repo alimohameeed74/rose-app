@@ -12,8 +12,7 @@ export const routes: Route[] = [
   },
   {
     path: 'products',
-    loadComponent: () =>
-      import('./products/pages/products/products.component').then((p) => p.ProductsComponent),
+    loadChildren: () => import('./products/products.routes').then((r) => r.routes),
   },
   {
     path: 'occasions',

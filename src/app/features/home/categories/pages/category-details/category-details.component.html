@@ -1,3 +1,134 @@
-<p>
-  category-details works!
-</p>
+<div class="space-y-8">
+  <section>
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold text-(--mode-color)">Category Details</h1>
+
+      <p class="text-sm text-(--placeholder) mt-1">
+        Explore category information and its subcategories
+      </p>
+    </div>
+    @if (category() && !isLoading()) {
+      <p-card styleClass="overflow-hidden rounded-2xl ">
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-[260px_1fr] md:gap-8">
+          <div
+            class="group relative h-56 overflow-hidden rounded-xl bg-(--surface-ground) md:h-full md:min-h-64"
+          >
+            <img
+              [src]="category()?.image ?? 'logo.ico'"
+              [alt]="category()?.title"
+              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+
+            <div
+              class="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/60 to-transparent p-4"
+            >
+              <span class="text-sm font-medium text-white">Category Overview</span>
+            </div>
+          </div>
+
+          <div class="flex min-w-0 flex-col justify-center gap-5 py-1">
+            <div class="space-y-3">
+              <div class="flex flex-wrap items-center gap-3">
+                <h2 class="text-2xl font-bold tracking-tight text-(--mode-color) md:text-3xl">
+                  {{ category()?.title }}
+                </h2>
+
+                <p-tag
+                  [value]="category()?.immutable ? 'Immutable' : 'Editable'"
+                  [severity]="category()?.immutable ? 'warn' : 'success'"
+                />
+              </div>
+
+              <p class="max-w-2xl text-sm leading-7 text-(--placeholder)">
+                {{ category()?.description || 'Discover our beautiful collection of flowers.' }}
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <!-- Subcategories -->
+              <div
+                class="flex items-center gap-4 rounded-xl border border-(--surface-border) bg-(--surface-ground) p-4 transition-colors"
+              >
+                <div
+                  class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-(--primary-color)/10"
+                >
+                  <i class="pi pi-th-large text-xl text-(--primary-color)"></i>
+                </div>
+
+                <div class="min-w-0">
+                  <p class="text-2xl font-bold text-(--mode-color)">
+                    {{ category()?.subCategories?.length ?? 0 }}
+                  </p>
+                  <p class="text-sm text-(--placeholder)">Subcategories</p>
+                </div>
+              </div>
+
+              <!-- Creation Date -->
+              <div
+                class="flex items-center gap-4 rounded-xl border border-(--surface-border) bg-(--surface-ground) p-4"
+              >
+                <div
+                  class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-(--primary-color)/10"
+                >
+                  <i class="pi pi-calendar text-xl text-(--primary-color)"></i>
+                </div>
+
+                <div class="min-w-0">
+                  <p class="text-base font-semibold text-(--mode-color)">
+                    {{ category()?.createdAt | date: 'mediumDate' }}
+                  </p>
+                  <p class="text-sm text-(--placeholder)">Date Created</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </p-card>
+    } @else if (isLoading()) {
+      <app-category-details-loader></app-category-details-loader>
+    } @else if (!category()) {
+      <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">
+        <i class="pi pi-exclamation-circle text-4xl! text-(--placeholder)! mb-4"></i>
+
+        <h3 class="text-lg font-semibold text-(--mode-color)">No category found</h3>
+      </div>
+    }
+  </section>
+  @if (category()) {
+    <section>
+      <div class="mb-5 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h2 class="text-2xl font-bold text-(--mode-color)">
+            Subcategories of {{ category()?.title }}
+          </h2>
+          <p class="mt-1 text-sm text-(--placeholder)">
+            Explore the collections available in {{ category()?.title }}
+          </p>
+        </div>
+
+        <p-tag
+          [value]="`${category()?.subCategories!.length} + Collections`"
+          severity="secondary"
+        />
+      </div>
+
+      @if (category()?.subCategories!.length > 0) {
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          @for (subCategory of category()?.subCategories; track subCategory?.id) {
+            <app-subcategory-card [subcategory]="subCategory"></app-subcategory-card>
+          }
+        </div>
+      } @else {
+        <div
+          class="rounded-xl border border-dashed border-(--surface-border) px-4 py-12 text-center"
+        >
+          <i class="pi pi-inbox text-4xl text-(--placeholder)"></i>
+          <h3 class="mt-3 font-semibold text-(--mode-color)">No Subcategories Yet</h3>
+          <p class="mt-1 text-sm text-(--placeholder)">
+            There are no subcategories available in this category yet.
+          </p>
+        </div>
+      }
+    </section>
+  }
+</div>

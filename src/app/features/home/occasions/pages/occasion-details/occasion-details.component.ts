@@ -7,7 +7,7 @@ import { ButtonDirective } from 'primeng/button';
 import { Card } from 'primeng/card';
 import { Tag } from 'primeng/tag';
 import { DatePipe } from '@angular/common';
-import { OccasionDetailsLoaderComponent } from '../../../../../shared/skeletons/occasion-details-loader/occasion-details-loader.component';
+import { OccasionDetailsLoaderComponent } from '../../../../../shared/skeletons/occasion/occasion-details-loader/occasion-details-loader.component.js';
 
 @Component({
   selector: 'app-occasion-details',

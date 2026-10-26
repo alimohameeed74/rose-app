@@ -1,3 +1,159 @@
-<p>
-  subcategory-details works!
-</p>
+<div class="space-y-8">
+  <section>
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold text-(--mode-color)">Subcategory Details</h1>
+
+      <p class="text-sm text-(--placeholder) mt-1">
+        Explore category information and its subcategories
+      </p>
+    </div>
+    @if (subCategory() && !isLoading()) {
+      <p-card styleClass="overflow-hidden rounded-2xl">
+        <div class="flex flex-col gap-6">
+          <div class="flex flex-col gap-5 sm:flex-row sm:items-start">
+            <div
+              class="group relative h-48 w-full shrink-0 overflow-hidden rounded-xl bg-(--surface-ground) sm:w-56"
+            >
+              <img
+                [src]="subCategory()?.image ?? 'logo.ico'"
+                [alt]="subCategory()?.title"
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+
+              <div
+                class="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/60 to-transparent p-3"
+              >
+                <span class="text-xs font-medium text-white"> Subcategory </span>
+              </div>
+            </div>
+
+            <div class="flex min-w-0 flex-1 flex-col gap-4 py-1">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <h2 class="text-2xl font-bold tracking-tight text-(--mode-color)">
+                  {{ subCategory()?.title }}
+                </h2>
+
+                <p-tag
+                  [value]="subCategory()?.immutable ? 'Immutable' : 'Editable'"
+                  [severity]="subCategory()?.immutable ? 'warn' : 'success'"
+                />
+              </div>
+
+              <p class="text-sm leading-7 text-(--placeholder)">
+                {{ subCategory()?.description || 'No description available for this subcategory.' }}
+              </p>
+
+              <div class="mt-auto grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <div
+                  class="flex items-center gap-3 rounded-xl border border-(--surface-border) p-3"
+                >
+                  <i class="pi pi-calendar text-lg text-(--primary-color)"></i>
+
+                  <div class="min-w-0">
+                    <p class="text-xs text-(--placeholder)">Created At</p>
+                    <p class="text-sm font-semibold text-(--mode-color)">
+                      {{ subCategory()?.createdAt | date: 'mediumDate' }}
+                    </p>
+                  </div>
+                </div>
+
+                <div
+                  class="flex items-center gap-3 rounded-xl border border-(--surface-border) p-3"
+                >
+                  <i class="pi pi-clock text-lg text-(--primary-color)"></i>
+
+                  <div class="min-w-0">
+                    <p class="text-xs text-(--placeholder)">Last Updated</p>
+                    <p class="text-sm font-semibold text-(--mode-color)">
+                      {{ subCategory()?.updatedAt | date: 'mediumDate' }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="border-t border-(--surface-border) pt-5">
+            <div class="mb-4 flex items-center gap-2">
+              <i class="pi pi-sitemap text-(--primary-color)"></i>
+
+              <h3 class="text-lg font-bold text-(--mode-color)">Parent Category</h3>
+            </div>
+
+            <div
+              class="flex flex-col gap-4 rounded-xl border border-(--surface-border) bg-(--surface-ground) p-4 sm:flex-row sm:items-center"
+            >
+              <div
+                class="flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-(--primary-color)/10"
+              >
+                <img
+                  [src]="subCategory()?.category?.image ?? 'logo.ico'"
+                  [alt]="subCategory()?.category?.title"
+                  class="h-full w-full object-cover"
+                />
+              </div>
+
+              <div class="min-w-0 flex-1 space-y-1">
+                <div class="flex flex-wrap items-center gap-2">
+                  <h4 class="text-base font-bold text-(--mode-color)">
+                    {{ subCategory()?.category?.title }}
+                  </h4>
+
+                  <p-tag
+                    [value]="subCategory()?.category?.immutable ? 'Immutable' : 'Editable'"
+                    [severity]="subCategory()?.category?.immutable ? 'warn' : 'success'"
+                  />
+                </div>
+
+                <p class="text-sm leading-6 text-(--placeholder)">
+                  {{
+                    subCategory()?.category?.description ||
+                      'No description available for this category.'
+                  }}
+                </p>
+              </div>
+
+              <div
+                class="flex shrink-0 items-center gap-2 sm:border-s sm:border-(--surface-border) sm:ps-4"
+              >
+                <i class="pi pi-calendar text-(--primary-color)"></i>
+
+                <div>
+                  <p class="text-xs text-(--placeholder)">Created At</p>
+                  <p class="text-sm font-medium text-(--mode-color)">
+                    {{ subCategory()?.category?.createdAt | date: 'mediumDate' }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </p-card>
+    } @else if (isLoading()) {
+      <app-subcategory-details-loader></app-subcategory-details-loader>
+    } @else if (!subCategory()) {
+      <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">
+        <i class="pi pi-exclamation-circle text-4xl! text-(--placeholder)! mb-4"></i>
+
+        <h3 class="text-lg font-semibold text-(--mode-color)">No subcategory found</h3>
+      </div>
+    }
+  </section>
+  @if (subCategory()) {
+    <section>
+      <div class="mb-5 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h2 class="text-2xl font-bold text-(--mode-color)">
+            Products of {{ subCategory()?.title }}
+          </h2>
+          <p class="mt-1 text-sm text-(--placeholder)">
+            Explore the products available in {{ subCategory()?.title }}
+          </p>
+        </div>
+
+        <p-tag [value]="`${subCategory()?.products!.length} + Collections`" severity="secondary" />
+      </div>
+      <app-product-list [products]="subCategory()!.products"></app-product-list>
+    </section>
+  }
+</div>

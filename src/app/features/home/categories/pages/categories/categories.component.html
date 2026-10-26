@@ -1,3 +1,22 @@
-<p>
-  categories works!
-</p>
+<div class="mb-8">
+  <h1 class="text-4xl font-bold text-(--mode-color)">Categories</h1>
+
+  <p class="text-sm text-(--placeholder) mt-1">Manage your product categories and subcategories</p>
+</div>
+<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+  @if (isLoading()) {
+    @for (item of [1, 2, 3]; track $index) {
+      <app-category-card-loader></app-category-card-loader>
+    }
+  } @else {
+    @for (category of categories(); track category.id) {
+      <app-category-card [category]="category"></app-category-card>
+    } @empty {
+      <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">
+        <i class="pi pi-exclamation-circle text-4xl! text-(--placeholder)! mb-4"></i>
+
+        <h3 class="text-lg font-semibold text-(--mode-color)">No categories found</h3>
+      </div>
+    }
+  }
+</div>
