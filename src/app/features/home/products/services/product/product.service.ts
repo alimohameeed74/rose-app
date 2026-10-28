@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { ConfigService } from '../../../../core/services/config/config.service.js';
+import { ConfigService } from '../../../../../core/services/config/config.service.js';
 import { map, Observable } from 'rxjs';
-import { ApiResponse } from '../../../../core/models/api-response.js';
-import { Product } from '../models/product.js';
-import { Metadata } from '../../occasions/models/occasion.js';
+import { ApiResponse } from '../../../../../core/models/api-response.js';
+import { Product } from '../../models/product.js';
+import { Metadata } from '../../../occasions/models/occasion.js';
 
 @Injectable({
   providedIn: 'root',
@@ -20,5 +20,9 @@ export class ProductService {
       )
       .pipe(map((res) => res.payload.data));
   }
-  getById(id: string) {}
+  getById(id: string): Observable<Product> {
+    return this.httpClient
+      .get<ApiResponse<{ product: Product }>>(`${this.configService.devApiUrl_()}/products/${id}`)
+      .pipe(map((res) => res.payload.product));
+  }
 }

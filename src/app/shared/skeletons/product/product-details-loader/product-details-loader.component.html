@@ -1,0 +1,61 @@
+<section class="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
+  <!-- Product Images Skeleton -->
+  <div class="min-w-0">
+    <!-- Main Image -->
+    <div class="overflow-hidden rounded-lg">
+      <p-skeleton
+        width="100%"
+        height="14rem"
+        borderRadius="0.5rem"
+        styleClass="sm:!h-80 lg:!h-72"
+      />
+    </div>
+
+    <!-- Gallery Thumbnails -->
+    <div class="mt-2 grid grid-cols-4 gap-2">
+      @for (item of [1, 2, 3, 4]; track item) {
+        <div class="overflow-hidden rounded-md p-0.5">
+          <p-skeleton width="100%" height="3.5rem" borderRadius="0.375rem" styleClass="sm:!h-20" />
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Product Information Skeleton -->
+  <div class="flex min-w-0 flex-col">
+    <div>
+      <!-- Product Title -->
+      <p-skeleton width="75%" height="1.75rem" styleClass="mb-4" />
+
+      <!-- Price and Stock -->
+      <div class="mt-2 flex flex-wrap items-center gap-2">
+        <p-skeleton width="6rem" height="1.5rem" />
+        <p-skeleton width="4rem" height="1rem" />
+        <p-skeleton width="7rem" height="1.5rem" borderRadius="9999px" />
+      </div>
+
+      <!-- Rating -->
+      <div class="mt-4 flex flex-wrap items-center gap-2 border-b border-(--placeholder) pb-3">
+        <p-skeleton shape="circle" size="0.875rem" />
+        <p-skeleton width="6rem" height="0.875rem" />
+        <p-skeleton width="5rem" height="0.875rem" />
+      </div>
+
+      <!-- Description -->
+      <div class="mt-4 space-y-2">
+        <p-skeleton width="100%" height="0.75rem" />
+        <p-skeleton width="98%" height="0.75rem" />
+        <p-skeleton width="94%" height="0.75rem" />
+        <p-skeleton width="100%" height="0.75rem" />
+        <p-skeleton width="72%" height="0.75rem" />
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="mt-8 flex items-center gap-2 sm:mt-12 lg:mt-auto lg:pt-12">
+      <p-skeleton width="2.5rem" height="2.5rem" borderRadius="0.5rem" />
+
+      <p-skeleton width="100%" height="2.5rem" borderRadius="0.5rem" styleClass="flex-1" />
+    </div>
+  </div>
+</section>

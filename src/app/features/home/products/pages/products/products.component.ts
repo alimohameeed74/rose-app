@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal, WritableSignal, DestroyRef } from '@angular/core';
 import { ProductListComponent } from '../../components/product-list/product-list.component';
 import { Product } from '../../models/product.js';
-import { ProductService } from '../../services/product.service.js';
+import { ProductService } from '../../services/product/product.service.js';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProductCardLoaderComponent } from '../../../../../shared/skeletons/product/product-card-loader/product-card-loader.component';
 

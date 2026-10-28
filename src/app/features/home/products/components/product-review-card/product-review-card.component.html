@@ -1,0 +1,57 @@
+<article
+  class="rounded-2xl border border-(--placeholder)/20 bg-(--mode-bg) p-4 shadow-sm transition-shadow duration-200 hover:shadow-md sm:p-5"
+>
+  <div class="flex items-center justify-between gap-2">
+    <div class="flex items-center gap-2">
+      <div
+        class="flex size-9 shrink-0 items-center justify-center rounded-full bg-red-800 text-sm font-semibold text-white"
+      >
+        {{ review().user.username[0].toUpperCase() }}
+      </div>
+
+      <div>
+        <h3 class="text-xs font-semibold text-(--mode-color)">{{ review().user.username }}</h3>
+        <p class="text-[10px] text-(--placeholder)">{{ review().createdAt | date }}</p>
+      </div>
+    </div>
+    @if (authService.isUserlogged_()) {
+      <div class="flex items-center gap-2">
+        <button pButton title="Edit Review">
+          <i class="pi pi-pen-to-square"></i>
+        </button>
+        <button
+          (click)="deleteReview(review().id)"
+          [disabled]="deleteLoading()"
+          pButton
+          title="Delete Review"
+        >
+          @if (deleteLoading()) {
+            <i class="pi pi-spin pi-spinner"></i>
+          } @else {
+            <i class="pi pi-trash"></i>
+          }
+        </button>
+      </div>
+    }
+  </div>
+
+  <div class="mt-3 flex items-center gap-1">
+    <div class="flex items-center gap-1">
+      @for (star of [1, 2, 3, 4, 5]; track $index) {
+        <i
+          class="pi text-xl text-amber-500"
+          [class.pi-star-fill]="star <= review().rating"
+          [class.pi-star]="star > review().rating"
+        ></i>
+      }
+    </div>
+
+    <span class="text-xs text-(--mode-color)">({{ review().rating }})</span>
+  </div>
+
+  <h4 class="mt-3 text-sm font-semibold text-(--mode-color)">{{ review().headline }}</h4>
+
+  <p class="mt-2 text-xs text-justify leading-relaxed text-(--placeholder)">
+    {{ review().content }}
+  </p>
+</article>

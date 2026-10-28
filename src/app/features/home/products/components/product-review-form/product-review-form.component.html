@@ -1,0 +1,74 @@
+<div class="min-w-0 border-t border-gray-200 pt-4 md:border-l md:border-t-0 md:pl-5 md:pt-0">
+  <form [formGroup]="reviewForm" (ngSubmit)="addReview()">
+    <!-- Your Rating -->
+    <div class="flex flex-wrap items-center gap-2">
+      <span class="text-xs font-medium text-(--mode-color)"> Your rating: </span>
+
+      <div class="flex gap-1 text-lg text-amber-500">
+        @for (item of [1, 2, 3, 4, 5]; track item) {
+          <i
+            (click)="icreaseRate(item)"
+            class="pi cursor-pointer"
+            [class.pi-star-fill]="item <= rateClicked()"
+            [class.pi-star]="item > rateClicked()"
+          ></i>
+        }
+      </div>
+    </div>
+
+    <!-- Title -->
+    <div class="mt-4">
+      <label for="reviewTitle" class="mb-1 block text-xs font-medium text-(--mode-color)">
+        Title
+      </label>
+
+      <input
+        id="reviewTitle"
+        pInputText
+        formControlName="headline"
+        type="text"
+        placeholder="Enter review title"
+        class="w-full text-xs placeholder:text-xs"
+      />
+      @if (headlineController.touched && headlineController.errors) {
+        @if (headlineController.hasError('required')) {
+          <app-err-mess mess="title is required"></app-err-mess>
+        }
+      }
+    </div>
+
+    <!-- Review -->
+    <div class="mt-3">
+      <label for="reviewContent" class="mb-1 block text-xs font-medium text-(--mode-color)">
+        Review
+      </label>
+
+      <textarea
+        id="reviewContent"
+        pInputText
+        formControlName="content"
+        rows="5"
+        placeholder="What do you think of this product?"
+        class="w-full resize-none text-xs placeholder:text-xs"
+      ></textarea>
+      @if (contentController.touched && contentController.errors) {
+        @if (contentController.hasError('required')) {
+          <app-err-mess mess="content is required"></app-err-mess>
+        }
+      }
+    </div>
+
+    <!-- Submit -->
+    <button
+      pButton
+      [disabled]="reviewForm.invalid || isLoading()"
+      type="submit"
+      class="mt-2 w-full justify-center"
+    >
+      @if (isLoading()) {
+        <i class="pi pi-spin pi-spinner"></i>
+      }
+      <span class="font-medium">Add Review</span>
+    </button>
+  </form>
+</div>

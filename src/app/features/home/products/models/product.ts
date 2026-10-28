@@ -1,3 +1,5 @@
+import { Review } from '../../reviews/models/review.js';
+
 export interface Product {
   id: string;
   title: string;
@@ -19,6 +21,7 @@ export interface Product {
   category: Category;
   subCategory: SubCategory;
   occasions: Occasion[];
+  reviews: Review[];
   _count: Count;
 }
 

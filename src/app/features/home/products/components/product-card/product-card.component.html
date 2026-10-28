@@ -8,10 +8,16 @@
 
     <button
       type="button"
+      (click)="addToWishlist(product().id)"
       title="Add to whishlist"
+      [disabled]="wishlistLoading()"
       class="absolute size-10 inset-s-4 top-4 flex items-center justify-center gap-2 rounded-full bg-(--mode-bg) px-4 py-3 text-sm font-medium text-(--primary-color) shadow-sm"
     >
-      <i class="pi pi-heart text-xl"></i>
+      @if (wishlistLoading()) {
+        <i class="pi pi-spinner pi-spin text-xl"></i>
+      } @else {
+        <i class="pi pi-heart text-xl"></i>
+      }
     </button>
 
     @if (product().stock <= 0) {
@@ -74,11 +80,16 @@
         type="button"
         pButton
         title="Add to cart"
-        [disabled]="product().stock <= 0"
+        (click)="addToCart(product().id)"
+        [disabled]="product().stock <= 0 || cartLoading()"
         class="absolute bottom-0 inset-e-0 flex size-8 items-center justify-center rounded-full bg-(--primary-color)"
         aria-label="Add to cart"
       >
-        <i class="pi pi-shopping-cart text-3xl"></i>
+        @if (cartLoading()) {
+          <i class="pi pi-spinner pi-spin text-3xl"></i>
+        } @else {
+          <i class="pi pi-shopping-cart text-3xl"></i>
+        }
       </button>
       <button
         type="button"

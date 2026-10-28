@@ -48,7 +48,6 @@ export class OccasionDetailsComponent implements OnInit {
         next: (res: Occasion) => {
           this.isLoading.set(false);
           this.occasion.set(res);
-          console.log(this.occasion());
         },
         error: (err) => {
           this.isLoading.set(false);
