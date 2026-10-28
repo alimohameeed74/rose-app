@@ -83,6 +83,7 @@ export class SigninComponent implements OnInit {
       email: user.email,
       role: user.role,
       username: user.username,
+      userId: user.id,
     };
     this.authService.setUser(userData, true);
     this.messageService.add({

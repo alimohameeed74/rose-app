@@ -124,7 +124,7 @@ export class ForgetPasswordComponent implements OnInit {
             detail: res.message,
           });
           this.resetAll();
-          this.router.navigate(['/auth']);
+          this.router.navigate(['/auth/signin']);
         },
         error: (err) => {
           this.passwordLoading.set(false);

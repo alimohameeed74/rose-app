@@ -81,6 +81,7 @@ export class AuthService {
             email: user.email,
             role: user.role,
             username: user.username,
+            userId: user.id,
           };
           this.setUser(userData, true);
         },

@@ -14,7 +14,7 @@
         <p class="text-[10px] text-(--placeholder)">{{ review().createdAt | date }}</p>
       </div>
     </div>
-    @if (authService.isUserlogged_()) {
+    @if (authService.isUserlogged_() && authService.loggedUserData_()?.userId === review().userId) {
       <div class="flex items-center gap-2">
         <button pButton title="Edit Review">
           <i class="pi pi-pen-to-square"></i>

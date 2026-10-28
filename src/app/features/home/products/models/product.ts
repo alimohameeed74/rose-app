@@ -1,4 +1,4 @@
-import { Review } from '../../reviews/models/review.js';
+import { Review } from './review.js';
 
 export interface Product {
   id: string;

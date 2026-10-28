@@ -11,7 +11,7 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { Review } from '../../../reviews/models/review.js';
+import { Review } from '../../models/review.js';
 import { DatePipe } from '@angular/common';
 import { ButtonDirective } from 'primeng/button';
 import { MessageService } from 'primeng/api';

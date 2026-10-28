@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { ConfigService } from '../../../../../core/services/config/config.service.js';
 import { AddProductReview } from '../../models/add-product-review.js';
 import { map, Observable } from 'rxjs';
-import { Review } from '../../../reviews/models/review.js';
+import { Review } from '../../models/review.js';
 import { ApiResponse } from '../../../../../core/models/api-response.js';
 import { VerifyEmail } from '../../../../auth/models/response/verify-email.js';
 

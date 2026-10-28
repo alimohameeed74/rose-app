@@ -8,7 +8,7 @@ import { ErrMessComponent } from '../../../../shared/components/err-mess/err-mes
 import { ButtonDirective } from 'primeng/button';
 import { Router, RouterLink } from '@angular/router';
 import { InputOtp } from 'primeng/inputotp';
-import { SelectModule, Select } from 'primeng/select';
+import { Select } from 'primeng/select';
 import { passwordMatch } from '../../../../shared/utils/password-match.util.js';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MessageService } from 'primeng/api';

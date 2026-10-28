@@ -19,7 +19,7 @@ import { ButtonDirective } from 'primeng/button';
 import { InputText } from 'primeng/inputtext';
 import { ErrMessComponent } from '../../../../../shared/components/err-mess/err-mess.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Review } from '../../../reviews/models/review.js';
+import { Review } from '../../models/review.js';
 
 @Component({
   selector: 'app-product-review-form',

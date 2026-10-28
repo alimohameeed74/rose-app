@@ -4,4 +4,5 @@ export interface LoggedUserData {
   username: string;
   email: string;
   role: Role;
+  userId: string;
 }
