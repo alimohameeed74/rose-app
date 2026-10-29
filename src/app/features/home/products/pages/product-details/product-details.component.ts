@@ -46,6 +46,7 @@ export class ProductDetailsComponent implements OnInit {
   wishlistLoading: WritableSignal<boolean> = signal(false);
   isLoading: WritableSignal<boolean> = signal(false);
   product: WritableSignal<Product | null> = signal(null);
+  productId: WritableSignal<string> = signal('');
 
   productGallery = computed<string[]>(() => {
     const gallery = this.product()?.gallery;
@@ -83,6 +84,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   getProductDetails(id: string) {
+    this.productId.set('');
     this.isLoading.set(true);
     this.productService
       .getById(id)
@@ -91,6 +93,7 @@ export class ProductDetailsComponent implements OnInit {
         next: (res: any) => {
           this.isLoading.set(false);
           this.product.set(res);
+          this.productId.set(this.product()!.id);
         },
         error: (err) => {
           this.isLoading.set(false);

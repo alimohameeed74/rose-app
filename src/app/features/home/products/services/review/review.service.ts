@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { ConfigService } from '../../../../../core/services/config/config.service.js';
-import { AddProductReview } from '../../models/add-product-review.js';
+import { AddProductReview, UpdateProductReview } from '../../models/add-product-review.js';
 import { map, Observable } from 'rxjs';
 import { Review } from '../../models/review.js';
 import { ApiResponse } from '../../../../../core/models/api-response.js';
@@ -20,7 +20,14 @@ export class ReviewService {
       .post<ApiResponse<{ review: Review }>>(`${this.configService.devApiUrl_()}/reviews`, data)
       .pipe(map((res) => res.payload.review));
   }
-  update() {}
+  update(id: string, data: UpdateProductReview): Observable<Review> {
+    return this.httpClient
+      .patch<ApiResponse<{ review: Review }>>(
+        `${this.configService.devApiUrl_()}/reviews/${id}`,
+        data,
+      )
+      .pipe(map((res) => res.payload.review));
+  }
   delete(id: string): Observable<VerifyEmail> {
     return this.httpClient.delete<VerifyEmail>(`${this.configService.devApiUrl_()}/reviews/${id}`);
   }

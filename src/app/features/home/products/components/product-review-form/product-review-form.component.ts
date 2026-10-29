@@ -9,7 +9,6 @@ import {
   InputSignal,
   input,
   OnChanges,
-  SimpleChanges,
   WritableSignal,
   signal,
   output,

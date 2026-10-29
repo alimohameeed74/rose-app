@@ -1,57 +1,127 @@
 <article
   class="rounded-2xl border border-(--placeholder)/20 bg-(--mode-bg) p-4 shadow-sm transition-shadow duration-200 hover:shadow-md sm:p-5"
 >
-  <div class="flex items-center justify-between gap-2">
-    <div class="flex items-center gap-2">
-      <div
-        class="flex size-9 shrink-0 items-center justify-center rounded-full bg-red-800 text-sm font-semibold text-white"
-      >
-        {{ review().user.username[0].toUpperCase() }}
-      </div>
-
-      <div>
-        <h3 class="text-xs font-semibold text-(--mode-color)">{{ review().user.username }}</h3>
-        <p class="text-[10px] text-(--placeholder)">{{ review().createdAt | date }}</p>
-      </div>
-    </div>
-    @if (authService.isUserlogged_() && authService.loggedUserData_()?.userId === review().userId) {
+  @if (!updateReviewClicked()) {
+    <div class="flex items-center justify-between gap-2">
       <div class="flex items-center gap-2">
-        <button pButton title="Edit Review">
-          <i class="pi pi-pen-to-square"></i>
-        </button>
-        <button
-          (click)="deleteReview(review().id)"
-          [disabled]="deleteLoading()"
-          pButton
-          title="Delete Review"
+        <div
+          class="flex size-9 shrink-0 items-center justify-center rounded-full bg-red-800 text-sm font-semibold text-white"
         >
-          @if (deleteLoading()) {
-            <i class="pi pi-spin pi-spinner"></i>
-          } @else {
-            <i class="pi pi-trash"></i>
-          }
-        </button>
-      </div>
-    }
-  </div>
+          {{ review().user.username[0].toUpperCase() }}
+        </div>
 
-  <div class="mt-3 flex items-center gap-1">
-    <div class="flex items-center gap-1">
-      @for (star of [1, 2, 3, 4, 5]; track $index) {
-        <i
-          class="pi text-xl text-amber-500"
-          [class.pi-star-fill]="star <= review().rating"
-          [class.pi-star]="star > review().rating"
-        ></i>
+        <div>
+          <h3 class="text-xs font-semibold text-(--mode-color)">{{ review().user.username }}</h3>
+          <p class="text-[10px] text-(--placeholder)">{{ review().createdAt | date }}</p>
+        </div>
+      </div>
+      @if (
+        authService.isUserlogged_() && authService.loggedUserData_()?.userId === review().userId
+      ) {
+        <div class="flex items-center gap-2">
+          <button (click)="openUpdateForm()" pButton title="Edit Review">
+            <i class="pi pi-pen-to-square"></i>
+          </button>
+          <button
+            (click)="deleteReview(review().id)"
+            [disabled]="deleteLoading()"
+            pButton
+            title="Delete Review"
+          >
+            @if (deleteLoading()) {
+              <i class="pi pi-spin pi-spinner"></i>
+            } @else {
+              <i class="pi pi-trash"></i>
+            }
+          </button>
+        </div>
       }
     </div>
 
-    <span class="text-xs text-(--mode-color)">({{ review().rating }})</span>
-  </div>
+    <div class="mt-3 flex items-center gap-1">
+      <div class="flex items-center gap-1">
+        @for (star of [1, 2, 3, 4, 5]; track $index) {
+          <i
+            class="pi text-xl text-amber-500"
+            [class.pi-star-fill]="star <= review().rating"
+            [class.pi-star]="star > review().rating"
+          ></i>
+        }
+      </div>
 
-  <h4 class="mt-3 text-sm font-semibold text-(--mode-color)">{{ review().headline }}</h4>
+      <span class="text-xs text-(--mode-color)">({{ review().rating }})</span>
+    </div>
 
-  <p class="mt-2 text-xs text-justify leading-relaxed text-(--placeholder)">
-    {{ review().content }}
-  </p>
+    <h4 class="mt-3 text-sm font-semibold text-(--mode-color)">{{ review().headline }}</h4>
+
+    <p class="mt-2 text-xs text-justify leading-relaxed text-(--placeholder)">
+      {{ review().content }}
+    </p>
+  }
+
+  <!-- Update Form -->
+  @if (updateReviewClicked()) {
+    <form [formGroup]="reviewForm" (ngSubmit)="updateReview()">
+      <!-- Your Rating -->
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="text-xs font-medium text-(--mode-color)"> Your rating: </span>
+
+        <div class="flex gap-1 text-lg text-amber-500">
+          @for (item of [1, 2, 3, 4, 5]; track item) {
+            <i
+              (click)="icreaseRate(item)"
+              class="pi cursor-pointer"
+              [class.pi-star-fill]="item <= rateClicked()"
+              [class.pi-star]="item > rateClicked()"
+            ></i>
+          }
+        </div>
+      </div>
+
+      <!-- Title -->
+      <div class="mt-4">
+        <label for="reviewTitle_" class="mb-1 block text-xs font-medium text-(--mode-color)">
+          Title
+        </label>
+
+        <input
+          id="reviewTitle_"
+          pInputText
+          formControlName="headline"
+          type="text"
+          placeholder="Enter review title"
+          class="w-full text-xs placeholder:text-xs"
+        />
+        @if (headlineController.touched && headlineController.errors) {
+          @if (headlineController.hasError('required')) {
+            <app-err-mess mess="title is required"></app-err-mess>
+          }
+        }
+      </div>
+
+      <div class="flex items-center flex-col gap-4">
+        <!-- Submit -->
+        <button
+          pButton
+          [disabled]="reviewForm.invalid || updateLoading()"
+          type="submit"
+          class="mt-2 w-full justify-center"
+        >
+          @if (updateLoading()) {
+            <i class="pi pi-spin pi-spinner"></i>
+          }
+          <span class="font-medium">Update Review</span>
+        </button>
+
+        <!-- Cancel -->
+        <button
+          (click)="closeAll()"
+          type="button"
+          class="rounded-md w-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-100 dark:border-zinc-600 dark:bg-zinc-800 dark:text-gray-200 dark:hover:bg-zinc-700"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  }
 </article>

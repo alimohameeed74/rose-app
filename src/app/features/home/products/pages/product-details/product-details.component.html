@@ -169,6 +169,7 @@
           @for (review of product()!.reviews; track review.id) {
             <app-product-review-card
               (onDeleteReview)="getProductDetails(product()!.id)"
+              (onUpdateReview)="getProductDetails(product()!.id)"
               [review]="review"
             ></app-product-review-card>
           } @empty {
@@ -184,7 +185,7 @@
       <!-- Add Review Form -->
       <app-product-review-form
         (onReviewCreate)="getProductDetails(product()!.id)"
-        [productId]="product()!.id"
+        [productId]="productId()"
       ></app-product-review-form>
     </div>
   </section>

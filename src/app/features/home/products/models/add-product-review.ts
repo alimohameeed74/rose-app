@@ -4,3 +4,7 @@ export interface AddProductReview {
   content: string;
   rating: number;
 }
+export interface UpdateProductReview {
+  headline: string;
+  rating: number;
+}
