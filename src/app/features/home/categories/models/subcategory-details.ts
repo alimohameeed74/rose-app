@@ -5,7 +5,7 @@ export interface SubcategoryDetails {
   id: string;
   title: string;
   description: string;
-  image: any;
+  image: string | null;
   categoryId: string;
   immutable: boolean;
   createdAt: string;

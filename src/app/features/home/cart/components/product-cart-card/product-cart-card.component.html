@@ -1,0 +1,95 @@
+<article
+  class="flex flex-col gap-3 mb-3 p-3 sm:flex-row sm:items-center border border-(--placeholder) rounded-md"
+>
+  <img
+    [src]="cartItem().product.cover ?? 'logo.ico'"
+    alt="Dreamy White Roses Bouquet"
+    class="size-20 shrink-0 rounded-md object-cover sm:size-24"
+  />
+
+  <div class="flex min-w-0 flex-1 flex-col justify-between gap-3">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h3 class="text-sm font-medium text-(--primary-color)">{{ cartItem().product.title }}</h3>
+
+        <div class="mt-1 flex items-center gap-1 text-xs">
+          <i class="pi pi-star-fill text-amber-500"></i>
+          <span class="text-(--primary-color)">Rating: {{ cartItem().product.rating }}/5</span>
+          <span class="text-(--placeholder) hover:underline"
+            >({{ cartItem().product.ratings }} ratings)</span
+          >
+        </div>
+      </div>
+
+      <button
+        [disabled]="deleteLoading()"
+        (click)="deleteItem(cartItem().id)"
+        titel="Remove Cart Item"
+        pButton
+      >
+        @if (deleteLoading()) {
+          <i class="pi pi=spin pi-spinner"></i>
+        } @else {
+          <i class="pi pi-trash"></i>
+        }
+      </button>
+    </div>
+
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-1">
+        <span class="text-[10px] text-(--primary-color)">(x{{ cartItem().quantity }})</span>
+        <div class="flex flex-wrap items-center gap-2 pe-14">
+          @if (
+            cartItem().product.discountType === 'PERCENT' &&
+            cartItem().product.discountValue &&
+            cartItem().product.discountValue !== '0'
+          ) {
+            <span class="text-xl font-medium text-(--primary-color)">
+              {{
+                +cartItem().product.price * (1 - +cartItem().product.discountValue / 100)
+                  | currency: 'EGP '
+              }}
+            </span>
+
+            <span class="text-lg text-(--placeholder) line-through">
+              {{ +cartItem().product.price | currency: 'EGP ' }}
+            </span>
+          } @else {
+            <span class="text-xl font-medium text-(--primary-color)">
+              {{ +cartItem().product.price | currency: 'EGP ' }}
+            </span>
+          }
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1">
+        @if (checks()) {
+          <button
+            [disabled]="updatedLoading()"
+            (click)="updateItemQuantity()"
+            [icon]="updatedLoading() ? 'pi pi-spin pi-spinner' : 'pi pi-check'"
+            pButton
+          ></button>
+          <button (click)="resetQuantity()" pButton icon="pi pi-times"></button>
+        }
+        <button
+          [disabled]="quantity() <= 1"
+          (click)="decreasQuantity()"
+          pButton
+          icon="pi pi-minus"
+        ></button>
+        <span
+          class="w-14 text-center text-(--mode-color) text-sm border border-(--primary-color) py-2 px-2.5 rounded-md"
+        >
+          {{ quantity() }}</span
+        >
+        <button
+          [disabled]="quantity() >= cartItem().product.stock"
+          (click)="increaseQuantity()"
+          pButton
+          icon="pi pi-plus"
+        ></button>
+      </div>
+    </div>
+  </div>
+</article>

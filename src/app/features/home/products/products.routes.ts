@@ -18,4 +18,12 @@ export const routes: Route[] = [
         (p) => p.ProductDetailsComponent,
       ),
   },
+  {
+    path: 'cart',
+    loadComponent: () => import('../cart/pages/cart/cart.component').then((p) => p.CartComponent),
+  },
+  // {
+  //   path: 'wishlist',
+  //   loadComponent: () => import('../cart/pages/cart/cart.component').then((p) => p.CartComponent),
+  // },
 ];

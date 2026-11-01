@@ -1,3 +1,4 @@
+import { CartService } from '../../features/home/cart/services/cart/cart.service';
 import { Component, computed, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { ToggleThemeComponent } from '../../shared/components/toggle-theme/toggle-theme.component';
 import { AuthService } from '../../features/auth/services/auth.service.js';
@@ -12,6 +13,7 @@ import { MenuItem } from 'primeng/api';
 })
 export class HeaderComponent implements OnInit {
   authService = inject(AuthService);
+  cartService = inject(CartService);
   private router = inject(Router);
 
   isMenuOpen: WritableSignal<boolean> = signal(false);

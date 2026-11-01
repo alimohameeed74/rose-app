@@ -1,7 +1,7 @@
 import { WishlistService } from './../../../wishlist/services/wishlist.service';
 import { MessageService } from 'primeng/api';
 import { AuthService } from './../../../../auth/services/auth.service';
-import { CartService } from './../../../cart/services/cart.service';
+import { CartService } from '../../../cart/services/cart/cart.service';
 import { Router } from '@angular/router';
 import {
   Component,
@@ -36,6 +36,7 @@ export class ProductCardComponent implements OnInit {
 
   cartLoading: WritableSignal<boolean> = signal(false);
   wishlistLoading: WritableSignal<boolean> = signal(false);
+  count: WritableSignal<number> = signal(0);
   product: InputSignal<Product> = input.required();
   constructor() {}
 
@@ -64,6 +65,10 @@ export class ProductCardComponent implements OnInit {
             summary: 'Added successfully.',
             detail: 'product added to your cart.',
           });
+          if (this.count() === 0) {
+            this.count.set(this.count() + 1);
+            this.cartService.increaseCartItemsCount();
+          }
         },
         error: (err) => {
           this.cartLoading.set(false);
@@ -84,7 +89,7 @@ export class ProductCardComponent implements OnInit {
       .addItem(productId)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (res: any) => {
+        next: (res: Product) => {
           this.wishlistLoading.set(false);
           this.messageService.add({
             severity: 'success',

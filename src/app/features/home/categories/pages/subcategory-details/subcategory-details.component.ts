@@ -45,7 +45,7 @@ export class SubcategoryDetailsComponent implements OnInit {
       .getSubCategotyById(id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (res: any) => {
+        next: (res: SubcategoryDetails) => {
           this.isLoading.set(false);
           this.subCategory.set(res);
         },

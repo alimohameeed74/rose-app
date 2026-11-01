@@ -10,7 +10,7 @@ export interface Product {
   price: string;
   discountType: string;
   discountValue: string;
-  cover: string;
+  cover: string | null;
   gallery: string;
   categoryId: string;
   subCategoryId: string;

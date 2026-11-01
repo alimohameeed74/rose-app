@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../auth/services/auth.service';
 import { Component, inject, OnInit, signal, WritableSignal, DestroyRef } from '@angular/core';
 import { ProductListComponent } from '../../components/product-list/product-list.component';
 import { Product } from '../../models/product.js';

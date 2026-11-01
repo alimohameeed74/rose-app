@@ -1,0 +1,148 @@
+@if (authService.isUserlogged_()) {
+  <!-- Header -->
+  <div class="mb-4 flex items-center justify-between">
+    <div>
+      <h1 class="text-4xl font-bold text-(--mode-color)">Cart</h1>
+      <p class="text-xs text-zinc-400">
+        {{ userCart().length }} products, you can update the quantity of any cart item.
+      </p>
+    </div>
+
+    <button [disabled]="clearLoading()" (click)="clearUserCart()" pButton>
+      @if (clearLoading()) {
+        <i class="pi pi-spin pi-spinner"></i>
+      } @else {
+        <i class="pi pi-trash"></i>
+      }
+      <span class="font-medium"> Clear Cart </span>
+    </button>
+  </div>
+
+  <!-- Main Layout -->
+  <div class="grid grid-cols-1 items-start gap-5 lg:grid-cols-3">
+    <!-- Cart Products -->
+    <section class="min-w-0 lg:col-span-2">
+      <div
+        class="overflow-hidden rounded-lg gap-4 mb-4 border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 p-4"
+      >
+        @if (isLoading()) {
+          @for (item of [1, 2, 3, 4, 5]; track $index) {
+            <app-product-cart-loader></app-product-cart-loader>
+          }
+        } @else {
+          @for (productCart of userCart(); track productCart.id) {
+            <app-product-cart-card
+              (onItemDeleted)="getUserCart()"
+              (onItemUpdated)="getUserCart()"
+              [cartItem]="productCart"
+            ></app-product-cart-card>
+          } @empty {
+            <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">
+              <i class="pi pi-exclamation-circle text-4xl! text-(--placeholder)! mb-4"></i>
+
+              <h3 class="text-lg font-semibold text-(--mode-color)">No Products found</h3>
+            </div>
+          }
+        }
+      </div>
+
+      <!-- Continue Shopping -->
+      <button
+        pButton
+        label="Continue Shopping"
+        icon="pi pi-arrow-left"
+        (click)="goToProducts()"
+        styleClass="mt-4"
+      ></button>
+    </section>
+
+    <!-- Summary -->
+    <aside class="min-w-0 lg:sticky lg:top-20">
+      <h2 class="mb-3 text-lg font-semibold text-(--mode-color)">Summary</h2>
+
+      <p-card>
+        <!-- View All Coupons Button -->
+        <button
+          (click)="getCoupons()"
+          pButton
+          [disabled]="couponLoading()"
+          type="button"
+          label="View All Coupons"
+          [icon]="couponLoading() ? 'pi pi-spin pi-spinner' : 'pi pi-ticket'"
+          size="small"
+          class="w-full"
+        ></button>
+
+        <!-- Coupons Container -->
+        <div
+          class="mt-3 max-h-72 space-y-3 overflow-y- scrollbar-none rounded-md border border-zinc-200 p-3 dark:border-zinc-700"
+        >
+          @for (coupon of coupons(); track coupon.id) {
+            <app-coupon-card
+              (onCouponApplied)="recieveDiscount($event)"
+              [coupon]="coupon"
+            ></app-coupon-card>
+          } @empty {
+            <p class="text-xs text-center text-(--mode-color)">No coupons applied</p>
+          }
+        </div>
+
+        <!-- Prices -->
+        <div class="mt-4 space-y-3">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-(--mode-color)">Subtotal</span>
+            <span class="font-medium text-(--mode-color)">
+              {{ totalPrice() | currency: 'EGP' }}
+            </span>
+          </div>
+
+          <div
+            class="flex items-center justify-between border-t border-zinc-200 pt-3 dark:border-zinc-700"
+          >
+            <span class="font-semibold text-(--primary-color)">Total</span>
+            <span class="font-bold text-(--primary-color)">
+              {{ totalPriceAfterCoupon() | currency: 'EGP' }} EGP
+            </span>
+          </div>
+        </div>
+        @if (resetBtn() && userCart().length !== 0) {
+          <button
+            pButton
+            label="Reset"
+            (click)="hideResetBtn()"
+            icon="pi pi-times"
+            iconPos="left"
+            class="mt-3 w-full"
+          ></button>
+        }
+      </p-card>
+
+      <!-- Checkout -->
+      <button
+        pButton
+        label="Checkout"
+        icon="pi pi-arrow-right"
+        iconPos="right"
+        class="mt-3 w-full"
+      ></button>
+    </aside>
+  </div>
+} @else {
+  <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">
+    <i class="pi pi-exclamation-circle text-4xl! text-(--placeholder)! mb-4"></i>
+
+    <h3 class="text-xl font-semibold text-zinc-800 dark:text-white">Your Cart is Empty</h3>
+
+    <p class="my-2 max-w-sm text-sm text-zinc-500">
+      Please sign in to view your cart and continue shopping.
+    </p>
+
+    <button
+      label="Sign In"
+      pButton
+      icon="pi pi-sign-in"
+      styleClass="mt-5"
+      (click)="goToSignIn()"
+    ></button>
+  </div>
+}

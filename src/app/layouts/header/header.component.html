@@ -111,7 +111,9 @@
         <div class="h-6 w-px bg-(--placeholder)/30"></div>
 
         <div class="relative cursor-pointer hover:text-(--primary-color)">
-          <i class="pi pi-heart text-lg!"></i>
+          <a routerLink="/main/products/wishlist">
+            <i class="pi pi-heart text-lg!"></i>
+          </a>
           @if (authService.isUserlogged_()) {
             <span
               class="absolute -top-1.5 -right-1.5 bg-(--primary-color) text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center"
@@ -121,11 +123,13 @@
         </div>
 
         <div class="relative cursor-pointer hover:text-(--primary-color)">
-          <i class="pi pi-shopping-cart text-lg!"></i>
+          <a routerLink="/main/products/cart">
+            <i class="pi pi-shopping-cart text-lg!"></i>
+          </a>
           @if (authService.isUserlogged_()) {
             <span
               class="absolute -top-1.5 -right-1.5 bg-(--primary-color) text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center"
-              >1</span
+              >{{ cartService.cartItemsCount_() }}</span
             >
           }
         </div>

@@ -13,7 +13,7 @@ import { Product } from '../../models/product.js';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CurrencyPipe } from '@angular/common';
 import { ButtonDirective } from 'primeng/button';
-import { CartService } from '../../../cart/services/cart.service.js';
+import { CartService } from '../../../cart/services/cart/cart.service.js';
 import { WishlistService } from '../../../wishlist/services/wishlist.service.js';
 import { AuthService } from '../../../../auth/services/auth.service.js';
 import { MessageService } from 'primeng/api';
@@ -47,6 +47,7 @@ export class ProductDetailsComponent implements OnInit {
   isLoading: WritableSignal<boolean> = signal(false);
   product: WritableSignal<Product | null> = signal(null);
   productId: WritableSignal<string> = signal('');
+  count: WritableSignal<number> = signal(0);
 
   productGallery = computed<string[]>(() => {
     const gallery = this.product()?.gallery;
@@ -90,7 +91,7 @@ export class ProductDetailsComponent implements OnInit {
       .getById(id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (res: any) => {
+        next: (res: Product) => {
           this.isLoading.set(false);
           this.product.set(res);
           this.productId.set(this.product()!.id);
@@ -122,6 +123,10 @@ export class ProductDetailsComponent implements OnInit {
             summary: 'Added successfully.',
             detail: 'product added to your cart.',
           });
+          if (this.count() === 0) {
+            this.count.set(this.count() + 1);
+            this.cartService.increaseCartItemsCount();
+          }
         },
         error: (err) => {
           this.cartLoading.set(false);
@@ -142,7 +147,7 @@ export class ProductDetailsComponent implements OnInit {
       .addItem(productId)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (res: any) => {
+        next: (res: Product) => {
           this.wishlistLoading.set(false);
           this.messageService.add({
             severity: 'success',
