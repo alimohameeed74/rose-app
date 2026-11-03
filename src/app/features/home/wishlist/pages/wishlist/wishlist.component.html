@@ -1,0 +1,76 @@
+@if (authService.isUserlogged_()) {
+  <section class="min-h-screen bg-(--mode-bg) py-5 text-(--mode-color)">
+    <!-- Header -->
+    <header
+      class="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-200 pb-4 dark:border-zinc-700"
+    >
+      <div class="flex items-center gap-3">
+        <div class="flex items-baseline gap-2">
+          <h1 class="text-4xl font-bold text-(--mode-color)">Wishlist</h1>
+
+          <span class="text-sm text-zinc-500"> {{ wishlist().length }} items </span>
+        </div>
+      </div>
+
+      <button
+        pButton
+        type="button"
+        (click)="clearUserWishlist()"
+        [disabled]="clearLoading()"
+        [icon]="clearLoading() ? 'pi pi-spin pi-spinner' : 'pi pi-trash'"
+        label="Clear Wishlist"
+      ></button>
+    </header>
+
+    <!-- Wishlist Items -->
+    <div class="mt-4">
+      @if (isLoading()) {
+        @for (item of [1, 2, 3]; track $index) {
+          <app-wishlist-card-loader></app-wishlist-card-loader>
+        }
+      } @else {
+        @for (wishlistItem of wishlist(); track wishlistItem.id) {
+          <app-product-wishlist-card
+            (onWishlistItemDeleted)="getUserWishlist()"
+            [wishlistItem]="wishlistItem"
+          ></app-product-wishlist-card>
+        } @empty {
+          <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">
+            <i class="pi pi-exclamation-circle text-4xl! text-(--placeholder)! mb-4"></i>
+
+            <h3 class="text-lg font-semibold text-(--mode-color)">No Products found</h3>
+          </div>
+        }
+      }
+    </div>
+
+    <!-- Continue Shopping -->
+    <div class="mt-4">
+      <button
+        (click)="goToProducts()"
+        pButton
+        type="button"
+        icon="pi pi-arrow-left"
+        label="Continue Shopping"
+      ></button>
+    </div>
+  </section>
+} @else {
+  <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">
+    <i class="pi pi-exclamation-circle text-4xl! text-(--placeholder)! mb-4"></i>
+
+    <h3 class="text-xl font-semibold text-zinc-800 dark:text-white">Your Wishlist is Empty</h3>
+
+    <p class="my-2 max-w-sm text-sm text-zinc-500">
+      Please sign in to view your wishlist and continue shopping.
+    </p>
+
+    <button
+      label="Sign In"
+      pButton
+      icon="pi pi-sign-in"
+      styleClass="mt-5"
+      (click)="goToSignIn()"
+    ></button>
+  </div>
+}

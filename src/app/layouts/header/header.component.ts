@@ -5,6 +5,7 @@ import { AuthService } from '../../features/auth/services/auth.service.js';
 import { Menu } from 'primeng/menu';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { WishlistService } from '../../features/home/wishlist/services/wishlist.service.js';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -14,6 +15,7 @@ import { MenuItem } from 'primeng/api';
 export class HeaderComponent implements OnInit {
   authService = inject(AuthService);
   cartService = inject(CartService);
+  wishlistService = inject(WishlistService);
   private router = inject(Router);
 
   isMenuOpen: WritableSignal<boolean> = signal(false);

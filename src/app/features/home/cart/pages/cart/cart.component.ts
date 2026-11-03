@@ -95,7 +95,7 @@ export class CartComponent implements OnInit {
         next: (res: VerifyEmail) => {
           this.messageService.add({
             severity: 'success',
-            summary: 'Added successfully.',
+            summary: 'Cleared successfully.',
             detail: `${res.message}`,
           });
           this.clearLoading.set(false);

@@ -22,8 +22,9 @@ export const routes: Route[] = [
     path: 'cart',
     loadComponent: () => import('../cart/pages/cart/cart.component').then((p) => p.CartComponent),
   },
-  // {
-  //   path: 'wishlist',
-  //   loadComponent: () => import('../cart/pages/cart/cart.component').then((p) => p.CartComponent),
-  // },
+  {
+    path: 'wishlist',
+    loadComponent: () =>
+      import('../wishlist/pages/wishlist/wishlist.component').then((p) => p.WishlistComponent),
+  },
 ];

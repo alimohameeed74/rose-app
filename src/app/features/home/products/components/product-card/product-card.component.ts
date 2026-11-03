@@ -36,7 +36,8 @@ export class ProductCardComponent implements OnInit {
 
   cartLoading: WritableSignal<boolean> = signal(false);
   wishlistLoading: WritableSignal<boolean> = signal(false);
-  count: WritableSignal<number> = signal(0);
+  cartCount: WritableSignal<number> = signal(0);
+  wishlistCount: WritableSignal<number> = signal(0);
   product: InputSignal<Product> = input.required();
   constructor() {}
 
@@ -65,8 +66,8 @@ export class ProductCardComponent implements OnInit {
             summary: 'Added successfully.',
             detail: 'product added to your cart.',
           });
-          if (this.count() === 0) {
-            this.count.set(this.count() + 1);
+          if (this.cartCount() === 0) {
+            this.cartCount.set(this.cartCount() + 1);
             this.cartService.increaseCartItemsCount();
           }
         },
@@ -96,6 +97,10 @@ export class ProductCardComponent implements OnInit {
             summary: 'Added successfully.',
             detail: 'product added to your wishlist.',
           });
+          if (this.wishlistCount() === 0) {
+            this.wishlistCount.set(this.wishlistCount() + 1);
+            this.wishlistService.increaseWishlistItemsCount();
+          }
         },
         error: (err) => {
           this.wishlistLoading.set(false);

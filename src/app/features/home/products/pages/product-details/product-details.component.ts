@@ -47,7 +47,8 @@ export class ProductDetailsComponent implements OnInit {
   isLoading: WritableSignal<boolean> = signal(false);
   product: WritableSignal<Product | null> = signal(null);
   productId: WritableSignal<string> = signal('');
-  count: WritableSignal<number> = signal(0);
+  cartCount: WritableSignal<number> = signal(0);
+  wishlistCount: WritableSignal<number> = signal(0);
 
   productGallery = computed<string[]>(() => {
     const gallery = this.product()?.gallery;
@@ -123,8 +124,8 @@ export class ProductDetailsComponent implements OnInit {
             summary: 'Added successfully.',
             detail: 'product added to your cart.',
           });
-          if (this.count() === 0) {
-            this.count.set(this.count() + 1);
+          if (this.cartCount() === 0) {
+            this.cartCount.set(this.cartCount() + 1);
             this.cartService.increaseCartItemsCount();
           }
         },
@@ -154,6 +155,10 @@ export class ProductDetailsComponent implements OnInit {
             summary: 'Added successfully.',
             detail: 'product added to your wishlist.',
           });
+          if (this.wishlistCount() === 0) {
+            this.wishlistCount.set(this.wishlistCount() + 1);
+            this.wishlistService.increaseWishlistItemsCount();
+          }
         },
         error: (err) => {
           this.wishlistLoading.set(false);
