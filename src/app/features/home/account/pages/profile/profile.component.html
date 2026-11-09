@@ -1,0 +1,272 @@
+<div class="flex flex-col gap-5">
+  <div
+    class="flex size-22 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-zinc-500"
+  >
+    <i class="pi pi-user text-3xl!"></i>
+  </div>
+
+  <!-- Profile Form -->
+  <form [formGroup]="profileForm" (ngSubmit)="updateProfile()" class="flex flex-col gap-3">
+    <!-- First Name & Last Name -->
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div class="flex flex-col gap-1.5">
+        <label for="firstName" class="text-xs font-medium text-(--mode-color)"> First name </label>
+
+        <input
+          id="firstName"
+          formControlName="firstName"
+          pInputText
+          type="text"
+          class="w-full"
+          placeholder="Enter your first name"
+        />
+        @if (firstNameController.touched && firstNameController.errors) {
+          @if (firstNameController.hasError('required')) {
+            <app-err-mess mess="first Name is required"></app-err-mess>
+          }
+        }
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <label for="lastName" class="text-xs font-medium text-(--mode-color)"> Last name </label>
+
+        <input
+          id="lastName"
+          formControlName="lastName"
+          pInputText
+          type="text"
+          class="w-full"
+          placeholder="Enter your last name"
+        />
+        @if (lastNameController.touched && lastNameController.errors) {
+          @if (lastNameController.hasError('required')) {
+            <app-err-mess mess="Last name is required"></app-err-mess>
+          }
+        }
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="flex flex-col gap-1.5 relative">
+      <label for="email" class="text-xs font-medium text-(--mode-color)"> Email </label>
+
+      <input
+        id="email"
+        pInputText
+        formControlName="email"
+        type="email"
+        class="w-full"
+        placeholder="Enter your email"
+      />
+      <button
+        (click)="openEmailModal()"
+        type="button"
+        class="absolute right-0 top-0 text-(--primary-color) hover:underline text-sm font-medium"
+      >
+        change email?
+      </button>
+
+      @if (emailController.touched && emailController.errors) {
+        @if (emailController.hasError('required')) {
+          <app-err-mess mess="email is required"></app-err-mess>
+        } @else if (emailController.hasError('email')) {
+          <app-err-mess mess="Invalid email"></app-err-mess>
+        }
+      }
+    </div>
+
+    <!-- Phone -->
+    <div class="flex flex-col gap-1.5">
+      <label for="phone" class="text-xs font-medium text-(--mode-color)"> Phone </label>
+
+      <input
+        id="phone"
+        pInputText
+        type="tel"
+        formControlName="phone"
+        class="w-full"
+        placeholder="Enter your phone"
+      />
+
+      @if (phoneController.touched && phoneController.errors) {
+        @if (phoneController.hasError('required')) {
+          <app-err-mess mess="phone is required"></app-err-mess>
+        } @else if (phoneController.hasError('pattern')) {
+          <app-err-mess mess="Invalid phone number"></app-err-mess>
+        }
+      }
+    </div>
+
+    <!-- Gender -->
+    <div class="flex flex-col gap-1.5">
+      <label for="gender" class="text-xs font-medium text-(--mode-color)"> Gender </label>
+
+      <p-select
+        inputId="gender"
+        formControlName="gender"
+        [options]="genders"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Select gender"
+        styleClass="w-full"
+      />
+    </div>
+
+    <!-- Actions -->
+    <div class="mt-10 flex flex-col items-center justify-between gap-4 sm:flex-row">
+      <button
+        type="button"
+        pButton
+        label="Delete My Account"
+        class="text-sm font-medium w-full sm:w-42"
+        (click)="showConfirmDialog()"
+      ></button>
+
+      <button
+        pButton
+        type="submit"
+        [disabled]="profileForm.invalid"
+        label="Save Changes"
+        class="w-full sm:w-42 text-sm font-medium"
+      ></button>
+    </div>
+  </form>
+</div>
+
+@if (openConfirmDialog()) {
+  <app-confirm-dialog (onDialogHide)="hideConfirmDialog()"></app-confirm-dialog>
+}
+
+<p-dialog
+  [visible]="openEmailDialog()"
+  (onHide)="closeEmailModal()"
+  [modal]="true"
+  [closable]="true"
+  [closeOnEscape]="false"
+  [dismissableMask]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '400px' }"
+>
+  <ng-template #header>
+    <span class="text-(--mode-color) font-bold text-2xl"> Reset Password </span>
+  </ng-template>
+
+  <div class="flex flex-col gap-3">
+    <!-- Stepper -->
+    <div class="flex items-center justify-center mb-4">
+      @for (item of [1, 2]; track item) {
+        <div class="flex items-center" [class.flex-1]="item !== 2">
+          <div
+            class="flex items-center justify-center size-9 rounded-full border-2 font-semibold transition-colors"
+            [class.bg-(--primary-color)]="step() >= item"
+            [class.text-white]="step() >= item"
+            [class.border-(--primary-color)]="step() >= item"
+            [class.border-gray-300]="step() < item"
+            [class.text-gray-500]="step() < item"
+          >
+            {{ item }}
+          </div>
+
+          @if (item !== 2) {
+            <div
+              class="h-0.5 flex-1 mx-2 transition-colors"
+              [class.bg-(--primary-color)]="step() > item"
+              [class.bg-gray-300]="step() <= item"
+            ></div>
+          }
+        </div>
+      }
+    </div>
+
+    @switch (step()) {
+      @case (1) {
+        <!-- Step 1: Email -->
+        <form [formGroup]="EmailForm" (ngSubmit)="submit()" class="flex flex-col gap-4">
+          <div class="text-center">
+            <h3 class="text-(--mode-color) font-bold text-xl">Enter Your New Email</h3>
+
+            <p class="text-(--placeholder) text-sm mt-1">
+              Enter your new email to receive a verification code.
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label for="newEmail" class="text-(--mode-color) font-medium">New Email Address </label>
+
+            <input
+              id="newEmail"
+              formControlName="newEmail"
+              type="email"
+              pInputText
+              placeholder="Enter your new email"
+              class="w-full"
+            />
+            @if (newEmailController.touched && newEmailController.errors) {
+              @if (newEmailController.hasError('required')) {
+                <app-err-mess mess="new email is required"></app-err-mess>
+              } @else if (newEmailController.hasError('email')) {
+                <app-err-mess mess="Invalid email"></app-err-mess>
+              }
+            }
+          </div>
+
+          <button
+            type="submit"
+            [disabled]="EmailForm.invalid || emailLoading()"
+            pButton
+            class="w-full font-medium justify-center"
+          >
+            <span class="font-medium">
+              @if (emailLoading()) {
+                <i class="pi pi-spin pi-spinner"></i>
+              }
+              Send</span
+            >
+          </button>
+        </form>
+      }
+      @case (2) {
+        <!-- Step 2: OTP -->
+        <form [formGroup]="otpForm" (ngSubmit)="submit()" class="flex flex-col gap-4">
+          <div class="text-center">
+            <h3 class="text-(--mode-color) font-bold text-xl">Verify Your Email</h3>
+
+            <p class="text-(--placeholder) text-sm mt-1">
+              Enter the verification code sent to your email address.
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <div class="flex flex-col gap-2">
+              <label class="text-(--mode-color) font-medium"> Verification Code </label>
+
+              <div class="flex justify-center">
+                <p-inputOtp formControlName="code" [length]="6" [integerOnly]="true" />
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-3 items-center">
+            <button
+              type="submit"
+              [disabled]="otpForm.invalid || otpLoading()"
+              pButton
+              class="w-full font-medium justify-center"
+            >
+              <span class="font-medium">
+                @if (otpLoading()) {
+                  <i class="pi pi-spin pi-spinner"></i>
+                }
+                Send</span
+              >
+            </button>
+            <button type="button" pButton (click)="decreaseStep()" class="w-full font-medium">
+              <span>back</span>
+            </button>
+          </div>
+        </form>
+      }
+    }
+  </div>
+</p-dialog>

@@ -195,8 +195,6 @@
               @if (usernameController.touched && usernameController.errors) {
                 @if (usernameController.hasError('required')) {
                   <app-err-mess mess="Username is required"></app-err-mess>
-                } @else if (usernameController.hasError('minlength')) {
-                  <app-err-mess mess="Username must be at least 3 characters"></app-err-mess>
                 }
               }
             </div>

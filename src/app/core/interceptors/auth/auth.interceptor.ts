@@ -7,7 +7,11 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     (req.url.includes('/users/profile') ||
       req.url.includes('/cart') ||
       req.url.includes('/wishlist') ||
-      req.url.includes('/review'))
+      req.url.includes('/review') ||
+      req.url.includes('/users/account') ||
+      req.url.includes('/users/change-password') ||
+      req.url.includes('/users/email/request') ||
+      req.url.includes('/users/email/confirm'))
   ) {
     const token_ = JSON.parse(token);
     req = req.clone({

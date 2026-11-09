@@ -149,52 +149,52 @@
   </div>
 
   @if (isMenuOpen()) {
-    <div
-      class="lg:hidden bg-(--mode-bg) border-t border-(--placeholder)/20 px-4 sm:px-6 lg:px-8 pt-3 pb-5 space-y-3 shadow-lg"
-    >
-      <div class="flex flex-col space-y-2">
-        <a
-          routerLink="/main/home"
-          routerLinkActive="text-(--primary-color)"
-          class="flex items-center gap-2 py-2 text-sm font-medium hover:text-(--primary-color)"
-        >
-          <i class="pi pi-home text-base"></i><span>Home</span>
-        </a>
-        <a
-          routerLink="/main/products"
-          routerLinkActive="text-(--primary-color)"
-          class="flex items-center gap-2 py-2 text-sm font-medium hover:text-(--primary-color)"
-        >
-          <i class="pi pi-box text-base"></i><span>Products</span>
-        </a>
-        <a
-          routerLink="/main/categories"
-          routerLinkActive="text-(--primary-color)"
-          class="flex items-center gap-2 py-2 text-sm font-medium hover:text-(--primary-color)"
-        >
-          <i class="pi pi-th-large text-base"></i><span>Categories</span>
-        </a>
-        <a
-          routerLink="/main/occasions"
-          routerLinkActive="text-(--primary-color)"
-          class="flex items-center gap-2 py-2 text-sm font-medium hover:text-(--primary-color)"
-        >
-          <i class="pi pi-star text-base"></i><span>Occasions</span>
-        </a>
-        <a
-          routerLink="/main/contact"
-          routerLinkActive="text-(--primary-color)"
-          class="flex items-center gap-2 py-2 text-sm font-medium hover:text-(--primary-color)"
-        >
-          <i class="pi pi-phone text-base"></i><span>Contact</span>
-        </a>
-        <a
-          routerLink="/main/about"
-          routerLinkActive="text-(--primary-color)"
-          class="flex items-center gap-2 py-2 text-sm font-medium hover:text-(--primary-color)"
-        >
-          <i class="pi pi-info-circle text-base"></i><span>About</span>
-        </a>
+    <div class="px-4 sm:px-6 lg:px-8 container mx-auto">
+      <div class="lg:hidden bg-(--mode-bg) border-t border-(--placeholder)/20 pt-3 pb-5 space-y-3">
+        <div class="flex flex-col space-y-2">
+          <a
+            routerLink="/main/home"
+            routerLinkActive="text-(--primary-color)"
+            class="flex items-center gap-2 py-2 text-sm font-medium hover:text-(--primary-color)"
+          >
+            <i class="pi pi-home text-base"></i><span>Home</span>
+          </a>
+          <a
+            routerLink="/main/products"
+            routerLinkActive="text-(--primary-color)"
+            class="flex items-center gap-2 py-2 text-sm font-medium hover:text-(--primary-color)"
+          >
+            <i class="pi pi-box text-base"></i><span>Products</span>
+          </a>
+          <a
+            routerLink="/main/categories"
+            routerLinkActive="text-(--primary-color)"
+            class="flex items-center gap-2 py-2 text-sm font-medium hover:text-(--primary-color)"
+          >
+            <i class="pi pi-th-large text-base"></i><span>Categories</span>
+          </a>
+          <a
+            routerLink="/main/occasions"
+            routerLinkActive="text-(--primary-color)"
+            class="flex items-center gap-2 py-2 text-sm font-medium hover:text-(--primary-color)"
+          >
+            <i class="pi pi-star text-base"></i><span>Occasions</span>
+          </a>
+          <a
+            routerLink="/main/contact"
+            routerLinkActive="text-(--primary-color)"
+            class="flex items-center gap-2 py-2 text-sm font-medium hover:text-(--primary-color)"
+          >
+            <i class="pi pi-phone text-base"></i><span>Contact</span>
+          </a>
+          <a
+            routerLink="/main/about"
+            routerLinkActive="text-(--primary-color)"
+            class="flex items-center gap-2 py-2 text-sm font-medium hover:text-(--primary-color)"
+          >
+            <i class="pi pi-info-circle text-base"></i><span>About</span>
+          </a>
+        </div>
       </div>
     </div>
   }

@@ -30,19 +30,14 @@ export class HeaderComponent implements OnInit {
 
   userMenuItems: WritableSignal<MenuItem[]> = signal([
     {
-      label: this.userName(),
-      styleClass:
-        'font-bold text-(--primary-color)  text-base border-b border-zinc-100 dark:border-zinc-700/50 pb-2 mb-1 pointer-events-none',
-    },
-    {
       label: 'Account',
       icon: 'pi pi-user',
-      command: () => this.router.navigate(['/account']),
+      command: () => this.router.navigate(['/main/account']),
     },
     {
       label: 'Addresses',
       icon: 'pi pi-map-marker',
-      command: () => this.router.navigate(['/addresses']),
+      command: () => this.router.navigate(['/main/account/addresses']),
     },
     {
       label: 'Orders',
@@ -51,8 +46,9 @@ export class HeaderComponent implements OnInit {
     },
 
     {
-      label: 'Dashboard',
+      label: 'Admin Dashboard',
       icon: 'pi pi-cog',
+      visible: false, // according to user's role
       command: () => this.router.navigate(['/dashboard']),
     },
 

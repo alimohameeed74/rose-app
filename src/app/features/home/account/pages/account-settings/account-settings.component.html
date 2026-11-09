@@ -1,0 +1,58 @@
+<div class="bg-(--mode-bg)">
+  <!-- Page Title -->
+  <h1 class="text-4xl font-bold text-(--mode-color) mb-5">Account Settings</h1>
+
+  <div class="flex flex-col gap-6 lg:flex-row">
+    <!-- Sidebar -->
+    <aside
+      class="flex w-full flex-col justify-between rounded-xl border border-zinc-100 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-900 lg:min-h-132 lg:w-55 lg:shrink-0"
+    >
+      <div class="flex flex-col gap-2">
+        <!-- Profile -->
+        <a
+          routerLink="/main/account/profile"
+          routerLinkActive="bg-(--primary-color)! text-white!"
+          class="flex items-center gap-3 rounded-md px-3 py-3 text-sm text-(--mode-color) hover:bg-(--primary-color) font-medium hover:text-white cursor-pointer transition-all"
+        >
+          <i class="pi pi-user-edit text-base"></i>
+          <span>Profile</span>
+        </a>
+
+        <!-- Change Password -->
+        <a
+          routerLink="/main/account/change-password"
+          routerLinkActive="bg-(--primary-color)! text-white!"
+          class="flex items-center gap-3 rounded-md px-3 py-3 text-sm text-(--mode-color) hover:bg-(--primary-color) font-medium hover:text-white cursor-pointer transition-all"
+        >
+          <i class="pi pi-lock text-base"></i>
+          <span>Change Password</span>
+        </a>
+        <!-- Addresses -->
+        <a
+          routerLink="/main/account/addresses"
+          routerLinkActive="bg-(--primary-color)! text-white!"
+          class="flex items-center gap-3 rounded-md px-3 py-3 text-sm text-(--mode-color) hover:bg-(--primary-color) font-medium hover:text-white cursor-pointer transition-all"
+        >
+          <i class="pi pi-address-book text-base"></i>
+          <span>Addresses</span>
+        </a>
+      </div>
+
+      <!-- Logout -->
+      <button
+        pButton
+        (click)="logout()"
+        type="button"
+        class="mt-6 flex items-center gap-3 font-medium p-3 text-sm transition-colors"
+      >
+        <i class="pi pi-sign-out"></i>
+        <span>Signout</span>
+      </button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="w-full flex-1">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
