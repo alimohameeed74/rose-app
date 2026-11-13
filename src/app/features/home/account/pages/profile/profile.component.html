@@ -200,7 +200,7 @@
               type="email"
               pInputText
               placeholder="Enter your new email"
-              class="w-full"
+              class="w-full placeholder:text-(--placeholder)!"
             />
             @if (newEmailController.touched && newEmailController.errors) {
               @if (newEmailController.hasError('required')) {

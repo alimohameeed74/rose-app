@@ -1,3 +1,44 @@
-<p>
-  addresses works!
-</p>
+<div class="bg-(--mode-bg) text-(--mode-color) rounded-xl border border-zinc-200 p-3 shadow-sm">
+  <!-- Header -->
+  <div class="flex items-center justify-between border-b border-zinc-200 pb-2">
+    <h2 class="text-lg font-bold text-(--mode-color)">
+      <span class="hidden md:inline">My </span>Addresses
+    </h2>
+
+    <button (click)="openModal()" pButton label="New Address" icon="pi pi-plus"></button>
+  </div>
+
+  <!-- Addresses -->
+  <div class="flex flex-col gap-3 mt-4 pt-4 h-fit lg:h-132 overflow-y-auto scrollbar-none">
+    @if (isLoading()) {
+      @for (item of [1, 2, 3]; track $index) {
+        <app-address-card-loader></app-address-card-loader>
+      }
+    } @else {
+      @for (address of addresses(); track address.id) {
+        <app-address-card
+          (onAddressDeleted)="getUserAddresses()"
+          (onAddressUpdated)="getUserAddresses()"
+          [address]="address"
+        ></app-address-card>
+      } @empty {
+        <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">
+          <i class="pi pi-exclamation-circle text-4xl! text-(--placeholder)! mb-4"></i>
+
+          <h3 class="text-lg font-semibold text-(--mode-color)">No Addresses found</h3>
+        </div>
+      }
+    }
+  </div>
+</div>
+
+<!-- Address Dialog -->
+
+@if (openDialog()) {
+  <app-address-dialog
+    (onDialogClosed)="closeModal()"
+    (onAddressCreated)="createAddress()"
+    [addressDetails]="null"
+    [isUpdate]="false"
+  ></app-address-dialog>
+}

@@ -1,0 +1,143 @@
+<p-dialog
+  [visible]="true"
+  (onHide)="closeModal()"
+  [modal]="true"
+  [closable]="true"
+  [closeOnEscape]="false"
+  [dismissableMask]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '650px' }"
+>
+  <ng-template #header>
+    <span class="text-(--mode-color) font-bold text-2xl">
+      {{ isUpdate() ? ' Update Address Info' : 'Add a New Address' }}
+    </span>
+  </ng-template>
+
+  <div class="flex flex-col gap-3">
+    <!-- Stepper -->
+    <div class="flex items-center w-full mb-1">
+      @for (item of [1, 2]; track item) {
+        <div class="flex items-center" [class.flex-1]="item !== 2">
+          <div
+            class="flex items-center justify-center size-8 rounded-full text-sm transition-colors"
+            [class.bg-(--primary-color)]="step() >= item"
+            [class.text-white]="step() >= item"
+            [class.bg-gray-200]="step() < item"
+            [class.text-gray-500]="step() < item"
+          >
+            {{ item }}
+          </div>
+
+          @if (item !== 2) {
+            <div
+              class="h-1 flex-1 transition-colors"
+              [class.bg-(--primary-color)]="step() > item"
+              [class.bg-gray-200]="step() <= item"
+            ></div>
+          }
+        </div>
+      }
+    </div>
+
+    <form [formGroup]="addressForm" (ngSubmit)="submit()" class="flex flex-col gap-3">
+      @switch (step()) {
+        @case (1) {
+          <h3 class="text-(--primary-color) font-medium text-lg border-b border-gray-200 pb-1">
+            Enter address details
+          </h3>
+
+          <div class="flex flex-col gap-2">
+            <label class="text-(--mode-color) text-sm font-medium">City</label>
+            <input
+              pInputText
+              type="text"
+              placeholder="Enter city name"
+              formControlName="city"
+              class="w-full placeholder:text-(--placeholder)!"
+            />
+
+            @if (cityController.touched && cityController.errors) {
+              @if (cityController.hasError('required')) {
+                <app-err-mess mess="city is required"></app-err-mess>
+              }
+            }
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label class="text-(--mode-color) text-sm font-medium">Address</label>
+            <textarea
+              formControlName="street"
+              pInputText
+              rows="4"
+              placeholder="Enter your full address"
+              class="w-full resize-none placeholder:text-(--placeholder)!"
+            ></textarea>
+
+            @if (streetController.touched && streetController.errors) {
+              @if (streetController.hasError('required')) {
+                <app-err-mess mess="street is required"></app-err-mess>
+              }
+            }
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label class="text-(--mode-color) text-sm font-medium">Phone</label>
+            <input
+              pInputText
+              type="tel"
+              formControlName="phone"
+              placeholder="Phone number"
+              class="w-full placeholder:text-(--placeholder)!"
+            />
+
+            @if (phoneController.touched && phoneController.errors) {
+              @if (phoneController.hasError('required')) {
+                <app-err-mess mess="phone is required"></app-err-mess>
+              } @else if (phoneController.hasError('pattern')) {
+                <app-err-mess mess="invalid phone"></app-err-mess>
+              }
+            }
+          </div>
+
+          <button
+            pButton
+            type="button"
+            [disabled]="addressForm.invalid"
+            class="w-full justify-center mt-7"
+            label="Next"
+            (click)="increaseStep()"
+          ></button>
+        }
+
+        @case (2) {
+          <div class="flex flex-col gap-3">
+            <div class="flex items-center gap-3 border-b border-gray-200 pb-2">
+              <button pButton type="button" (click)="decreaseStep()">
+                <i class="pi pi-arrow-left"></i>
+              </button>
+
+              <h3 class="text-(--primary-color) text-lg font-medium">Find Your Location</h3>
+            </div>
+
+            <!-- Map Placeholder -->
+            <div #mapContainer class="w-full h-62.5 rounded-lg"></div>
+
+            <button
+              pButton
+              [disabled]="addressForm.invalid || submitLoading()"
+              type="submit"
+              class="w-full justify-center mt-7"
+            >
+              @if (submitLoading()) {
+                <i class="pi pi-spinner pi-spin"></i>
+              }
+              <span class="font-medium">{{ isUpdate() ? 'Update' : 'Add' }} Address</span>
+            </button>
+          </div>
+        }
+      }
+    </form>
+  </div>
+</p-dialog>

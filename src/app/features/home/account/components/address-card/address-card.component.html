@@ -1,0 +1,46 @@
+<div class="relative border border-(--primary-color) rounded-xl p-2 pt-3">
+  <span
+    class="absolute -top-2 left-2 bg-(--mode-bg) px-1 text-sm font-medium text-(--primary-color)"
+  >
+    {{ address().title }}
+  </span>
+
+  <div class="flex items-center justify-between gap-2">
+    <div class="flex items-center gap-2">
+      <i class="pi pi-map-marker bg-emerald-500 text-white rounded-full p-1 text-xs"></i>
+      <span class="font-semibold text-sm"> {{ address().city }}</span>
+    </div>
+
+    <div class="flex items-center gap-1 text-xs">
+      <i class="pi pi-phone"></i>
+      <span>{{ address().phone }}</span>
+    </div>
+  </div>
+
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-2 gap-4">
+    <p class="text-(--placeholder) rounded-full px-2 py-1 text-sm">
+      {{ address().street }}
+    </p>
+
+    <div class="flex items-center gap-2">
+      <button (click)="openModal()" pButton icon="pi pi-pencil"></button>
+
+      <button
+        [disabled]="deleteLoading()"
+        (click)="deleteAddress(address().id)"
+        pButton
+        [icon]="deleteLoading() ? 'pi pi-spinner pi-spin' : 'pi pi-trash'"
+      ></button>
+    </div>
+  </div>
+</div>
+
+<!-- Address Dialog -->
+@if (openDialog()) {
+  <app-address-dialog
+    (onDialogClosed)="closeModal()"
+    (onAddressUpdated)="updatedAddress()"
+    [addressDetails]="address()"
+    [isUpdate]="true"
+  ></app-address-dialog>
+}
