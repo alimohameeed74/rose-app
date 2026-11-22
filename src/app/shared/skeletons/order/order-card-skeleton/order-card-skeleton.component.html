@@ -1,0 +1,109 @@
+<div
+  class="rounded-xl overflow-hidden shadow-sm border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/50 animate-pulse"
+>
+  <!-- Top Header Bar -->
+  <div class="flex flex-wrap items-center justify-between gap-3 px-5 py-3">
+    <p-skeleton width="80px" height="18px" borderRadius="6px"></p-skeleton>
+    <p-skeleton width="190px" height="14px" borderRadius="6px"></p-skeleton>
+  </div>
+
+  <!-- Card Body -->
+  <div class="p-5 space-y-5">
+    <!-- Total Price + Payment Badge + Order Status -->
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div class="flex flex-wrap items-center gap-3">
+        <p-skeleton width="190px" height="24px"></p-skeleton>
+        <p-skeleton width="85px" height="22px" borderRadius="20px"></p-skeleton>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <p-skeleton width="45px" height="14px"></p-skeleton>
+        <p-skeleton width="75px" height="22px" borderRadius="20px"></p-skeleton>
+      </div>
+    </div>
+
+    <!-- Price Breakdown -->
+    <div
+      class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-3 rounded-xl bg-(--mode-bg) border border-zinc-200/80 dark:border-zinc-700/80"
+    >
+      @for (item of [1, 2, 3, 4]; track item) {
+        <div class="flex flex-col gap-2">
+          <p-skeleton width="65px" height="12px"></p-skeleton>
+          <p-skeleton width="90px" height="16px"></p-skeleton>
+        </div>
+      }
+    </div>
+
+    <!-- Payment, Tracking & Customer Details -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Payment & Delivery Info -->
+      <div
+        class="p-3.5 rounded-xl bg-(--mode-bg) border border-zinc-200/80 dark:border-zinc-700/80 space-y-4"
+      >
+        <p-skeleton width="155px" height="14px"></p-skeleton>
+
+        @for (item of [1, 2, 3]; track item) {
+          <div class="flex items-center gap-2">
+            <p-skeleton shape="circle" size="16px"></p-skeleton>
+            <p-skeleton width="105px" height="13px"></p-skeleton>
+            <p-skeleton width="100px" height="13px"></p-skeleton>
+          </div>
+        }
+
+        <div
+          class="flex items-center justify-between pt-2 border-t border-zinc-100 dark:border-zinc-800"
+        >
+          <p-skeleton width="75px" height="12px"></p-skeleton>
+          <p-skeleton width="145px" height="12px"></p-skeleton>
+        </div>
+      </div>
+
+      <!-- Customer & Shipping Address -->
+      <div
+        class="p-3.5 rounded-xl bg-(--mode-bg) border border-zinc-200/80 dark:border-zinc-700/80 space-y-4"
+      >
+        <p-skeleton width="190px" height="14px"></p-skeleton>
+
+        @for (item of [1, 2, 3, 4]; track item) {
+          <div class="flex items-center gap-2">
+            <p-skeleton shape="circle" size="16px"></p-skeleton>
+            <p-skeleton width="85px" height="13px"></p-skeleton>
+            <p-skeleton width="130px" height="13px"></p-skeleton>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Order Items -->
+    <div class="space-y-2.5 pt-1">
+      <div class="flex items-center justify-between">
+        <p-skeleton width="100px" height="16px"></p-skeleton>
+      </div>
+
+      <div class="rounded-xl bg-(--mode-bg) p-3 border border-zinc-200/80 dark:border-zinc-700/80">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          @for (item of [1, 2]; track item) {
+            <div
+              class="flex items-center gap-3 rounded-lg border border-zinc-200 dark:border-zinc-700 p-3"
+            >
+              <!-- Product Image -->
+              <p-skeleton
+                width="80px"
+                height="80px"
+                borderRadius="8px"
+                styleClass="shrink-0"
+              ></p-skeleton>
+
+              <!-- Product Information -->
+              <div class="flex-1 min-w-0 space-y-2">
+                <p-skeleton width="75%" height="15px"></p-skeleton>
+                <p-skeleton width="55%" height="12px"></p-skeleton>
+                <p-skeleton width="65%" height="12px"></p-skeleton>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

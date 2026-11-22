@@ -1,4 +1,12 @@
-<div class="relative border border-(--primary-color) rounded-xl p-2 pt-3">
+<div
+  (click)="clickAddress(address().id)"
+  class="relative border rounded-xl p-2 pt-3 cursor-pointer transition-colors"
+  [class.border-(--primary-color)]="isSelected()"
+  [class.bg-red-50]="isSelected()"
+  [class.dark:bg-red-950]="isSelected()"
+  [class.border-zinc-200]="!isSelected()"
+  [class.dark:border-zinc-700]="!isSelected()"
+>
   <span
     class="absolute -top-2 left-2 bg-(--mode-bg) px-1 text-sm font-medium text-(--primary-color)"
   >

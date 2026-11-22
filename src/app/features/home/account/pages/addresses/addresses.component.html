@@ -11,7 +11,7 @@
   <!-- Addresses -->
   <div class="flex flex-col gap-3 mt-4 pt-4 h-fit lg:h-132 overflow-y-auto scrollbar-none">
     @if (isLoading()) {
-      @for (item of [1, 2, 3]; track $index) {
+      @for (item of [1, 2, 3, 4, 5]; track $index) {
         <app-address-card-loader></app-address-card-loader>
       }
     } @else {
@@ -20,6 +20,8 @@
           (onAddressDeleted)="getUserAddresses()"
           (onAddressUpdated)="getUserAddresses()"
           [address]="address"
+          (onAddressClicked)="emitAddressId($event)"
+          [isSelected]="selectedAddressId() === address.id"
         ></app-address-card>
       } @empty {
         <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">

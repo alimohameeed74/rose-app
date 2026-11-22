@@ -24,6 +24,13 @@ export const routes: Route[] = [
     loadChildren: () => import('./categories/categories.routes').then((r) => r.routes),
   },
   {
+    path: 'notifications',
+    loadComponent: () =>
+      import('./notifications/pages/notifications/notifications.component').then(
+        (p) => p.NotificationsComponent,
+      ),
+  },
+  {
     path: 'account',
     canActivate: [authGuard],
     loadComponent: () =>
@@ -31,6 +38,11 @@ export const routes: Route[] = [
         (p) => p.AccountSettingsComponent,
       ),
     loadChildren: () => import('./account/account.routes').then((r) => r.routes),
+  },
+  {
+    path: 'orders',
+    canActivate: [authGuard],
+    loadComponent: () => import('./order/pages/list/list.component').then((p) => p.ListComponent),
   },
   {
     path: 'contact',

@@ -1,7 +1,7 @@
 <nav class="fixed top-0 left-0 w-full z-50 bg-(--mode-bg) text-(--mode-color) shadow-md">
   <div class="px-4 sm:px-6 lg:px-8 container mx-auto">
     <div class="flex items-center justify-between h-20 gap-4">
-      <div class="shrink-0 cursor-pointer">
+      <div class="shrink-0 cursor-pointer hidden sm:block">
         <img src="logo.ico" alt="App Logo" class="h-14 sm:h-16 w-auto object-contain" />
       </div>
 
@@ -95,11 +95,8 @@
               (click)="menu.toggle($event)"
               class="flex items-center gap-2 cursor-pointer hover:text-(--primary-color) font-medium text-sm"
             >
-              <span
-                >Hello
-                <span class="hidden sm:inline"
-                  >, {{ authService.loggedUserData_()?.username }}</span
-                ></span
+              <span class="hidden sm:inline"
+                >Hello, {{ authService.loggedUserData_()?.username }}</span
               >
               <i class="pi pi-chevron-down text-xs"></i>
             </button>
@@ -130,6 +127,17 @@
             <span
               class="absolute -top-1.5 -right-1.5 bg-(--primary-color) text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center"
               >{{ cartService.cartItemsCount_() }}</span
+            >
+          }
+        </div>
+        <div class="relative cursor-pointer hover:text-(--primary-color)">
+          <a routerLink="/main/notifications">
+            <i class="pi pi-bell text-lg!"></i>
+          </a>
+          @if (authService.isUserlogged_()) {
+            <span
+              class="absolute -top-1.5 -right-1.5 bg-(--primary-color) text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center"
+              >0</span
             >
           }
         </div>

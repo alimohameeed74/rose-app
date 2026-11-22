@@ -30,12 +30,14 @@ export class AddressCardComponent implements OnInit {
   private messageService = inject(MessageService);
 
   address: InputSignal<Address> = input.required();
+  isSelected: InputSignal<boolean> = input.required();
   deleteLoading: WritableSignal<boolean> = signal(false);
   openDialog: WritableSignal<boolean> = signal(false);
   step: WritableSignal<number> = signal(1);
 
   onAddressDeleted = output<void>();
   onAddressUpdated = output<void>();
+  onAddressClicked = output<string>();
 
   constructor() {}
 
@@ -76,5 +78,9 @@ export class AddressCardComponent implements OnInit {
 
   updatedAddress() {
     this.onAddressUpdated.emit();
+  }
+
+  clickAddress(id: string) {
+    this.onAddressClicked.emit(id);
   }
 }

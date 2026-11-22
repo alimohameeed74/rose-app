@@ -1,132 +1,305 @@
 @if (authService.isUserlogged_()) {
-  <!-- Header -->
-  <div class="mb-4 flex flex-col md:flex-row md:items-center md:justify-between">
-    <div>
-      <h1 class="text-4xl font-bold text-(--mode-color)">Cart</h1>
-      <p class="text-xs text-zinc-400 mb-2 md:mb-0">
-        {{ userCart().length }} products, you can update the quantity of any cart item.
-      </p>
-    </div>
+  @switch (step()) {
+    @case (0) {
+      <!-- Cart -->
+      <div class="mb-4 flex flex-col md:flex-row md:items-center md:justify-between">
+        <div>
+          <h1 class="text-4xl font-bold text-(--mode-color)">Cart</h1>
+          <p class="text-xs text-zinc-400 mb-2 md:mb-0">
+            {{ userCart().length }} products, you can update the quantity of any cart item.
+          </p>
+        </div>
 
-    <button [disabled]="clearLoading()" (click)="clearUserCart()" pButton>
-      @if (clearLoading()) {
-        <i class="pi pi-spin pi-spinner"></i>
-      } @else {
-        <i class="pi pi-trash"></i>
-      }
-      <span class="font-medium"> Clear Cart </span>
-    </button>
-  </div>
-
-  <!-- Main Layout -->
-  <div class="grid grid-cols-1 items-start gap-5 lg:grid-cols-3">
-    <!-- Cart Products -->
-    <section class="min-w-0 lg:col-span-2">
-      <div
-        class="overflow-hidden rounded-lg gap-4 mb-4 border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 p-4"
-      >
-        @if (isLoading()) {
-          @for (item of [1, 2, 3, 4, 5]; track $index) {
-            <app-product-cart-loader></app-product-cart-loader>
+        <button [disabled]="clearLoading()" (click)="clearUserCart()" pButton>
+          @if (clearLoading()) {
+            <i class="pi pi-spin pi-spinner"></i>
+          } @else {
+            <i class="pi pi-trash"></i>
           }
-        } @else {
-          @for (productCart of userCart(); track productCart.id) {
-            <app-product-cart-card
-              (onItemDeleted)="getUserCart()"
-              (onItemUpdated)="getUserCart()"
-              [cartItem]="productCart"
-            ></app-product-cart-card>
-          } @empty {
-            <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">
-              <i class="pi pi-exclamation-circle text-4xl! text-(--placeholder)! mb-4"></i>
+          <span class="font-medium"> Clear Cart </span>
+        </button>
+      </div>
 
-              <h3 class="text-lg font-semibold text-(--mode-color)">No Products found</h3>
+      <div class="grid grid-cols-1 items-start gap-5 lg:grid-cols-3">
+        <!-- Cart Products -->
+        <section class="min-w-0 lg:col-span-2">
+          <div
+            class="overflow-hidden rounded-lg gap-4 mb-4 border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 p-4"
+          >
+            @if (isLoading()) {
+              @for (item of [1, 2, 3, 4, 5]; track $index) {
+                <app-product-cart-loader></app-product-cart-loader>
+              }
+            } @else {
+              @for (productCart of userCart(); track productCart.id) {
+                <app-product-cart-card
+                  (onItemDeleted)="getUserCart()"
+                  (onItemUpdated)="getUserCart()"
+                  [cartItem]="productCart"
+                ></app-product-cart-card>
+              } @empty {
+                <div
+                  class="col-span-full flex flex-col items-center justify-center py-16 text-center"
+                >
+                  <i class="pi pi-exclamation-circle text-4xl! text-(--placeholder)! mb-4"></i>
+                  <h3 class="text-lg font-semibold text-(--mode-color)">No Products found</h3>
+                </div>
+              }
+            }
+          </div>
+
+          <!-- Continue Shopping -->
+          <button
+            pButton
+            label="Continue Shopping"
+            icon="pi pi-arrow-left"
+            (click)="goToProducts()"
+            styleClass="mt-4"
+          ></button>
+        </section>
+
+        <!-- Summary -->
+        <aside class="min-w-0 lg:sticky lg:top-20">
+          <h2 class="mb-3 text-lg font-semibold text-(--mode-color)">Summary</h2>
+
+          <p-card>
+            <!-- View All Coupons Button -->
+            <button
+              (click)="getCoupons()"
+              pButton
+              [disabled]="couponLoading() || userCart().length === 0"
+              type="button"
+              label="View All Coupons"
+              [icon]="couponLoading() ? 'pi pi-spin pi-spinner' : 'pi pi-ticket'"
+              size="small"
+              class="w-full"
+            ></button>
+
+            <!-- Coupons Container -->
+            <div
+              class="mt-3 max-h-72 space-y-3 overflow-y- scrollbar-none rounded-md border border-zinc-200 p-3 dark:border-zinc-700"
+            >
+              @for (coupon of coupons(); track coupon.id) {
+                <app-coupon-card
+                  (onCouponApplied)="recieveDiscount($event, coupon.code)"
+                  [coupon]="coupon"
+                ></app-coupon-card>
+              } @empty {
+                <p class="text-xs text-center text-(--mode-color)">No coupons applied</p>
+              }
             </div>
-          }
+
+            <!-- Prices -->
+            <div class="mt-4 space-y-3">
+              <div class="flex items-center justify-between text-xs">
+                <span class="text-(--mode-color)">Subtotal</span>
+                <span class="font-medium text-(--mode-color)">
+                  {{ totalPrice() | currency: 'EGP' }}
+                </span>
+              </div>
+
+              <div
+                class="flex items-center justify-between border-t border-zinc-200 pt-3 dark:border-zinc-700"
+              >
+                <span class="font-semibold text-(--primary-color)">Total</span>
+                <span class="font-bold text-(--primary-color)">
+                  {{ totalPriceAfterCoupon() | currency: 'EGP' }} EGP
+                </span>
+              </div>
+            </div>
+
+            @if (resetBtn() && userCart().length !== 0) {
+              <button
+                pButton
+                label="Reset"
+                (click)="hideResetBtn()"
+                icon="pi pi-times"
+                iconPos="left"
+                class="mt-3 w-full"
+              ></button>
+            }
+          </p-card>
+
+          <!-- Checkout -->
+          <button
+            pButton
+            [disabled]="userCart().length === 0"
+            label="Checkout"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            class="mt-3 w-full"
+            (click)="increaseStep()"
+          ></button>
+        </aside>
+      </div>
+    }
+
+    @case (1) {
+      <!-- Stepper -->
+      <div class="flex items-center w-full mb-6">
+        @for (item of [1, 2]; track item) {
+          <div class="flex items-center" [class.flex-1]="item !== 2">
+            <div
+              class="flex items-center justify-center size-8 rounded-full text-sm transition-colors"
+              [class.bg-(--primary-color)]="step() >= item"
+              [class.text-white]="step() >= item"
+              [class.bg-gray-200]="step() < item"
+              [class.text-gray-500]="step() < item"
+            >
+              {{ item }}
+            </div>
+
+            @if (item !== 2) {
+              <div
+                class="h-1 flex-1 transition-colors"
+                [class.bg-(--primary-color)]="step() > item"
+                [class.bg-gray-200]="step() <= item"
+              ></div>
+            }
+          </div>
         }
       </div>
 
-      <!-- Continue Shopping -->
-      <button
-        pButton
-        label="Continue Shopping"
-        icon="pi pi-arrow-left"
-        (click)="goToProducts()"
-        styleClass="mt-4"
-      ></button>
-    </section>
+      <!-- Shipping Address -->
+      <section>
+        <app-addresses (onAddressClicked)="getAddressId($event)"></app-addresses>
 
-    <!-- Summary -->
-    <aside class="min-w-0 lg:sticky lg:top-20">
-      <h2 class="mb-3 text-lg font-semibold text-(--mode-color)">Summary</h2>
-
-      <p-card>
-        <!-- View All Coupons Button -->
-        <button
-          (click)="getCoupons()"
-          pButton
-          [disabled]="couponLoading()"
-          type="button"
-          label="View All Coupons"
-          [icon]="couponLoading() ? 'pi pi-spin pi-spinner' : 'pi pi-ticket'"
-          size="small"
-          class="w-full"
-        ></button>
-
-        <!-- Coupons Container -->
+        <!-- Actions -->
         <div
-          class="mt-3 max-h-72 space-y-3 overflow-y- scrollbar-none rounded-md border border-zinc-200 p-3 dark:border-zinc-700"
+          class="mt-6 flex justify-between items-center border-t border-zinc-100 pt-4 dark:border-zinc-700"
         >
-          @for (coupon of coupons(); track coupon.id) {
-            <app-coupon-card
-              (onCouponApplied)="recieveDiscount($event)"
-              [coupon]="coupon"
-            ></app-coupon-card>
-          } @empty {
-            <p class="text-xs text-center text-(--mode-color)">No coupons applied</p>
-          }
-        </div>
-
-        <!-- Prices -->
-        <div class="mt-4 space-y-3">
-          <div class="flex items-center justify-between text-xs">
-            <span class="text-(--mode-color)">Subtotal</span>
-            <span class="font-medium text-(--mode-color)">
-              {{ totalPrice() | currency: 'EGP' }}
-            </span>
-          </div>
-
-          <div
-            class="flex items-center justify-between border-t border-zinc-200 pt-3 dark:border-zinc-700"
-          >
-            <span class="font-semibold text-(--primary-color)">Total</span>
-            <span class="font-bold text-(--primary-color)">
-              {{ totalPriceAfterCoupon() | currency: 'EGP' }} EGP
-            </span>
-          </div>
-        </div>
-        @if (resetBtn() && userCart().length !== 0) {
           <button
             pButton
-            label="Reset"
-            (click)="hideResetBtn()"
-            icon="pi pi-times"
+            label="Back"
+            icon="pi pi-arrow-left"
             iconPos="left"
-            class="mt-3 w-full"
+            class="min-w-28"
+            (click)="decreaseStep()"
           ></button>
-        }
-      </p-card>
+          <button
+            pButton
+            label="Next"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            class="min-w-28"
+            (click)="checkAboutAddress()"
+          ></button>
+        </div>
+      </section>
+    }
 
-      <!-- Checkout -->
-      <button
-        pButton
-        label="Checkout"
-        icon="pi pi-arrow-right"
-        iconPos="right"
-        class="mt-3 w-full"
-      ></button>
-    </aside>
-  </div>
+    @case (2) {
+      <!-- Stepper -->
+      <div class="flex items-center w-full mb-6">
+        @for (item of [1, 2]; track item) {
+          <div class="flex items-center" [class.flex-1]="item !== 2">
+            <div
+              class="flex items-center justify-center size-8 rounded-full text-sm transition-colors"
+              [class.bg-(--primary-color)]="step() >= item"
+              [class.text-white]="step() >= item"
+              [class.bg-gray-200]="step() < item"
+              [class.text-gray-500]="step() < item"
+            >
+              {{ item }}
+            </div>
+
+            @if (item !== 2) {
+              <div
+                class="h-1 flex-1 transition-colors"
+                [class.bg-(--primary-color)]="step() > item"
+                [class.bg-gray-200]="step() <= item"
+              ></div>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Payment Method -->
+      <section>
+        <div class="flex items-center gap-3 mb-6">
+          <h2 class="text-xl font-semibold text-(--mode-color)">Payment Method</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 px-2 mb-4">
+          <!-- Cash on Delivery -->
+          <div
+            (click)="getPaymentMethod('CASH_ON_DELIVERY')"
+            class="flex flex-col items-center justify-center rounded-xl border p-5 cursor-pointer transition-colors"
+            [class.border-(--primary-color)]="paymentMethod() === 'CASH_ON_DELIVERY'"
+            [class.bg-red-50]="paymentMethod() === 'CASH_ON_DELIVERY'"
+            [class.dark:bg-red-950]="paymentMethod() === 'CASH_ON_DELIVERY'"
+            [class.border-zinc-200]="paymentMethod() !== 'CASH_ON_DELIVERY'"
+            [class.dark:border-zinc-700]="paymentMethod() !== 'CASH_ON_DELIVERY'"
+            [class.bg-zinc-50]="paymentMethod() !== 'CASH_ON_DELIVERY'"
+            [class.dark:bg-zinc-800]="paymentMethod() !== 'CASH_ON_DELIVERY'"
+          >
+            <i class="pi pi-money-bill text-7xl text-(--mode-color) mb-5"></i>
+
+            <h3 class="text-lg font-semibold text-(--mode-color)">Cash on Delivery</h3>
+
+            <p class="mt-1 text-center text-xs text-zinc-500">
+              You'll pay in cash when your order is delivered.
+            </p>
+          </div>
+
+          <!-- Credit Card -->
+          <div
+            (click)="getPaymentMethod('CREDIT_CARD')"
+            class="flex flex-col items-center justify-center rounded-xl border p-5 cursor-pointer transition-colors"
+            [class.border-(--primary-color)]="paymentMethod() === 'CREDIT_CARD'"
+            [class.bg-red-50]="paymentMethod() === 'CREDIT_CARD'"
+            [class.dark:bg-red-950]="paymentMethod() === 'CREDIT_CARD'"
+            [class.border-zinc-200]="paymentMethod() !== 'CREDIT_CARD'"
+            [class.dark:border-zinc-700]="paymentMethod() !== 'CREDIT_CARD'"
+            [class.bg-zinc-50]="paymentMethod() !== 'CREDIT_CARD'"
+            [class.dark:bg-zinc-800]="paymentMethod() !== 'CREDIT_CARD'"
+          >
+            <i class="pi pi-credit-card text-7xl text-(--mode-color) mb-5"></i>
+
+            <h3 class="text-lg font-semibold text-(--mode-color)">Credit Card</h3>
+
+            <p class="mt-1 text-center text-xs text-zinc-500">
+              You'll be securely redirected to Stripe to complete your payment.
+            </p>
+          </div>
+        </div>
+        <div class="flex flex-col gap-4">
+          <p class="text-lg font-semibold text-(--mode-color)">Enter a note if you want:</p>
+          <textarea
+            pInputText
+            [(ngModel)]="orderNote"
+            rows="4"
+            placeholder="Enter your note if you want..."
+            class="w-full resize-none placeholder:text-(--placeholder)!"
+          ></textarea>
+        </div>
+
+        <!-- Actions -->
+        <div
+          class="mt-6 flex justify-between items-center border-t border-zinc-100 pt-4 dark:border-zinc-700"
+        >
+          <button
+            pButton
+            label="Back"
+            icon="pi pi-arrow-left"
+            iconPos="left"
+            class="min-w-28"
+            (click)="decreaseStep()"
+            [disabled]="createOrderLoading()"
+          ></button>
+          <button
+            pButton
+            label="Checkout"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            class="min-w-28"
+            (click)="checkAboutPaymentMethod()"
+            [disabled]="createOrderLoading()"
+          ></button>
+        </div>
+      </section>
+    }
+  }
 } @else {
   <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">
     <i class="pi pi-exclamation-circle text-4xl! text-(--placeholder)! mb-4"></i>
@@ -146,3 +319,45 @@
     ></button>
   </div>
 }
+
+<p-dialog
+  [visible]="paymentDialog()"
+  [modal]="true"
+  [closable]="false"
+  [closeOnEscape]="false"
+  [dismissableMask]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '400px' }"
+>
+  <ng-template #header>
+    <span class="text-(--mode-color) font-bold text-2xl"> Payment Options </span>
+  </ng-template>
+
+  <div class="flex flex-col items-center gap-4 text-center">
+    <i class="pi pi-wallet text-5xl text-(--primary-color)"></i>
+
+    <p class="text-(--mode-color) font-medium">How would you like to complete your payment?</p>
+
+    <div class="flex flex-col gap-3 w-full">
+      <!-- Pay Now -->
+      <button (click)="payNow()" type="button" pButton class="w-full font-medium">
+        <i class="pi pi-credit-card mr-2"></i>
+        <span>Pay Now</span>
+      </button>
+
+      <!-- Pay Later -->
+      <button
+        (click)="payLater()"
+        type="button"
+        pButton
+        severity="secondary"
+        outlined
+        class="w-full font-medium"
+      >
+        <i class="pi pi-clock mr-2"></i>
+        <span>Pay Later</span>
+      </button>
+    </div>
+  </div>
+</p-dialog>

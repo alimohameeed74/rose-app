@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
     {
       label: 'Orders',
       icon: 'pi pi-file',
-      command: () => this.router.navigate(['/orders']),
+      command: () => this.router.navigate(['/main/orders']),
     },
 
     {

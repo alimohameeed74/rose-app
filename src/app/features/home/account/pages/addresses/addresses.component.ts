@@ -1,5 +1,13 @@
 import { AddressService } from './../../services/address/address.service';
-import { Component, OnInit, signal, WritableSignal, inject, DestroyRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  signal,
+  WritableSignal,
+  inject,
+  DestroyRef,
+  output,
+} from '@angular/core';
 import { ButtonDirective } from 'primeng/button';
 import { Address } from '../../models/address.js';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -16,7 +24,6 @@ import { AddressDialogComponent } from '../../components/address-dialog/address-
     ButtonDirective,
     AddressCardComponent,
     AddressCardLoaderComponent,
-
     AddressDialogComponent,
   ],
 })
@@ -28,7 +35,9 @@ export class AddressesComponent implements OnInit {
   isLoading: WritableSignal<boolean> = signal(false);
   openDialog: WritableSignal<boolean> = signal(false);
   step: WritableSignal<number> = signal(1);
+  selectedAddressId: WritableSignal<string> = signal('');
 
+  onAddressClicked = output<string>();
   constructor() {}
 
   ngOnInit() {
@@ -70,5 +79,10 @@ export class AddressesComponent implements OnInit {
   createAddress() {
     this.closeModal();
     this.getUserAddresses();
+  }
+
+  emitAddressId(id: string) {
+    this.selectedAddressId.set(id);
+    this.onAddressClicked.emit(id);
   }
 }

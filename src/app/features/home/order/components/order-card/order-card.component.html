@@ -1,0 +1,153 @@
+<div
+  class="rounded-xl overflow-hidden shadow-sm border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/50"
+>
+  <!-- Top Header Bar -->
+  <div
+    class="flex flex-wrap items-center justify-between gap-2 px-5 py-3 text-white bg-(--primary-color) dark:text-zinc-950 font-semibold"
+  >
+    <div class="text-base md:text-lg">Order</div>
+    <div class="text-xs md:text-sm opacity-95">
+      Created in: {{ order().createdAt | date: "d MMMM, y 'at' h:mm a" }}
+    </div>
+  </div>
+
+  <!-- Card Body -->
+  <div class="p-5 space-y-5">
+    <!-- Total Price + Payment Badge + Order Status -->
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div class="flex flex-wrap items-center gap-3">
+        <span class="text-lg md:text-xl font-bold">
+          Total Price: {{ order().total | currency: 'EGP' }}</span
+        >
+        <p-tag [value]="order().paymentStatus" severity="info" [rounded]="true"></p-tag>
+      </div>
+
+      <div class="flex items-center gap-2 text-sm">
+        <span class="text-(--placeholder)">Status:</span>
+        <p-tag [value]="order().status" severity="info" [rounded]="true"></p-tag>
+      </div>
+    </div>
+
+    <!-- Price Breakdown (Subtotal, Discount, Shipping, Coupon) -->
+    <div
+      class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-3 rounded-xl bg-(--mode-bg) border border-zinc-200/80 dark:border-zinc-700/80 text-sm"
+    >
+      <div>
+        <span class="block text-xs text-(--placeholder)">Subtotal</span>
+        <span class="font-semibold">{{ order().subtotal | currency: 'EGP' }}</span>
+      </div>
+      <div>
+        <span class="block text-xs text-(--placeholder)">Discount</span>
+        <span class="font-semibold">{{ order().discount | currency: 'EGP' }}</span>
+      </div>
+      <div>
+        <span class="block text-xs text-(--placeholder)">Shipping</span>
+        <span class="font-semibold">{{ order().shipping | currency: 'EGP' }}</span>
+      </div>
+      <div>
+        <span class="block text-xs text-(--placeholder)">Coupon</span>
+        <span class="font-semibold">{{ order().couponId ?? 'N/A' }}</span>
+      </div>
+    </div>
+
+    <!-- Payment, Tracking & Customer Details -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+      <!-- Payment & Delivery Info -->
+      <div
+        class="p-3.5 rounded-xl bg-(--mode-bg) border border-zinc-200/80 dark:border-zinc-700/80 space-y-2"
+      >
+        <h3 class="font-semibold text-xs uppercase tracking-wider text-(--placeholder)">
+          Order & Payment Info
+        </h3>
+        <div class="flex sm:items-center gap-2 flex-col items-start sm:flex-row">
+          <div class="flex gap-2 items-center">
+            <i class="pi pi-credit-card text-(--placeholder)"></i>
+            <span class="text-(--placeholder)">Payment Method:</span>
+          </div>
+          <span class="font-medium">{{ order().paymentMethod }}</span>
+        </div>
+
+        <div class="flex sm:items-center gap-2 flex-col items-start sm:flex-row">
+          <div class="flex gap-2 items-center">
+            <i class="pi pi-box text-(--placeholder)"></i>
+            <span class="text-(--placeholder)">Tracking Number:</span>
+          </div>
+          <span class="font-medium text-(--placeholder)">{{
+            order().trackingNumber ?? 'Not assigned'
+          }}</span>
+        </div>
+        <div class="flex sm:items-center gap-2 flex-col items-start sm:flex-row">
+          <div class="flex gap-2 items-center">
+            <i class="pi pi-file-edit text-(--placeholder) mt-0.5"></i>
+            <span class="text-(--placeholder)">Notes:</span>
+          </div>
+          <span class="font-medium text-(--placeholder)">{{ order().notes || 'No notes' }}</span>
+        </div>
+        <div
+          class="flex flex-col sm:flex-row items-start sm:items-center gap-2 text-xs pt-1 border-t border-zinc-100 dark:border-zinc-800"
+        >
+          <span class="text-(--placeholder)">Updated At:</span>
+          <span>{{ order().updatedAt | date: "d MMMM, y 'at' h:mm a" }}</span>
+        </div>
+      </div>
+
+      <!-- Customer & Shipping Address -->
+      <div
+        class="p-3.5 rounded-xl bg-(--mode-bg) border border-zinc-200/80 dark:border-zinc-700/80 space-y-2"
+      >
+        <h3 class="font-semibold text-xs uppercase tracking-wider text-(--placeholder)">
+          Customer & Delivery Address
+        </h3>
+        <div class="flex sm:items-center gap-2 flex-col items-start sm:flex-row">
+          <div class="flex gap-2 items-center">
+            <i class="pi pi-user text-(--placeholder)"></i>
+            <span class="font-medium">{{ order().user.username }}</span>
+          </div>
+          <span class="text-xs text-(--placeholder)">({{ order().user.email }})</span>
+        </div>
+        <div class="flex sm:items-center gap-2 flex-col items-start sm:flex-row">
+          <div class="flex gap-2 items-center">
+            <i class="pi pi-map-marker text-(--placeholder)"></i>
+            <span class="font-medium">{{ order().address.title }}:</span>
+          </div>
+          <span>{{ order().address.street }}, {{ order().address.city }}</span>
+        </div>
+        <div class="flex sm:items-center gap-2 flex-col items-start sm:flex-row">
+          <div class="flex gap-2 items-center">
+            <i class="pi pi-phone text-(--placeholder)"></i>
+            <span class="text-(--placeholder)">Phone:</span>
+          </div>
+          <span class="font-medium">{{ order().address.phone }}</span>
+        </div>
+        <div
+          class="flex gap-2 text-xs text-(--placeholder) flex-col sm:flex-row items-start sm:items-center"
+        >
+          <i class="pi pi-compass"></i>
+          <span>Coordinates: {{ order().address.latitude }}, {{ order().address.longitude }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- All Order Items -->
+    <div class="space-y-2.5 pt-1">
+      <div class="text-sm font-medium">Order Items ({{ order().orderItems.length }}):</div>
+
+      <div class="rounded-xl bg-(--mode-bg) p-3 border border-zinc-200/80 dark:border-zinc-700/80">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          @for (orderItem of order().orderItems; track orderItem.id) {
+            <app-order-item-card [orderItem]="orderItem"></app-order-item-card>
+          } @empty {
+            <div class="w-full flex flex-col items-center justify-center py-16 text-center">
+              <i class="pi pi-exclamation-circle text-4xl! text-(--placeholder)! mb-4"></i>
+              <h3 class="text-lg font-semibold text-(--mode-color)">No Items found</h3>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    @if (order().paymentStatus !== 'PROCESSING' || order().paymentMethod === 'CASH_ON_DELIVERY') {
+      <button pButton label="Pay Now" icon="pi pi-plus"></button>
+    }
+  </div>
+</div>
