@@ -6,7 +6,7 @@ import { OrderService } from './order.service';
 describe('Service: Order', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [OrderService]
+      providers: [OrderService],
     });
   });
 

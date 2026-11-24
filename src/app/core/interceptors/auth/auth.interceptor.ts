@@ -14,7 +14,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       req.url.includes('/users/email/confirm') ||
       req.url.includes('/addresses') ||
       req.url.includes('/notifications') ||
-      req.url.includes('/orders'))
+      req.url.includes('/orders') ||
+      req.url.includes('/payments'))
   ) {
     const token_ = JSON.parse(token);
     req = req.clone({

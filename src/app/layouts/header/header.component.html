@@ -130,17 +130,6 @@
             >
           }
         </div>
-        <div class="relative cursor-pointer hover:text-(--primary-color)">
-          <a routerLink="/main/notifications">
-            <i class="pi pi-bell text-lg!"></i>
-          </a>
-          @if (authService.isUserlogged_()) {
-            <span
-              class="absolute -top-1.5 -right-1.5 bg-(--primary-color) text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center"
-              >0</span
-            >
-          }
-        </div>
 
         <app-toggle-theme></app-toggle-theme>
       </div>

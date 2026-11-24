@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { ConfigService } from '../../../../core/services/config/config.service.js';
-import { CreateOrder } from '../models/create-order.js';
+import { ConfigService } from '../../../../../core/services/config/config.service.js';
+import { CreateOrder } from '../../models/create-order.js';
 import { map, Observable } from 'rxjs';
-import { ApiResponse } from '../../../../core/models/api-response.js';
-import { Checkout, Order } from '../models/order.js';
-import { Metadata } from '../../occasions/models/occasion.js';
+import { ApiResponse } from '../../../../../core/models/api-response.js';
+import { Checkout, Order } from '../../models/order.js';
+import { Metadata } from '../../../occasions/models/occasion.js';
 
 @Injectable({
   providedIn: 'root',

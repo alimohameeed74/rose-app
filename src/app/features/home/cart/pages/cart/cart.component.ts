@@ -25,7 +25,7 @@ import { Coupon } from '../../models/coupon.js';
 import { CouponCardComponent } from '../../components/coupon-card/coupon-card.component';
 import { AddressesComponent } from '../../../account/pages/addresses/addresses.component';
 import { InputText } from 'primeng/inputtext';
-import { OrderService } from '../../../order/services/order.service.js';
+import { OrderService } from '../../../order/services/order/order.service.js';
 import { Checkout } from '../../../order/models/order.js';
 import { Dialog } from 'primeng/dialog';
 
@@ -87,7 +87,7 @@ export class CartComponent implements OnInit {
     paymentMethod: [''],
     couponCode: [''],
     notes: [''],
-    successUrl: ['http://localhost:4200/main/products/cart'],
+    successUrl: ['https://rose-app-ruddy-six.vercel.app/main/products/cart'],
   });
   constructor() {}
 

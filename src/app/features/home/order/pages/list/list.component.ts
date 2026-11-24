@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { Tag } from 'primeng/tag';
 import { Order } from '../../models/order.js';
-import { OrderService } from '../../services/order.service.js';
+import { OrderService } from '../../services/order/order.service.js';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { OrderCardComponent } from '../../components/order-card/order-card.component';
 import { OrderCardSkeletonComponent } from '../../../../../shared/skeletons/order/order-card-skeleton/order-card-skeleton.component';

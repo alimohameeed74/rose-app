@@ -146,8 +146,14 @@
       </div>
     </div>
 
-    @if (order().paymentStatus !== 'PROCESSING' || order().paymentMethod === 'CASH_ON_DELIVERY') {
-      <button pButton label="Pay Now" icon="pi pi-plus"></button>
+    @if (order().paymentMethod === 'CREDIT_CARD') {
+      <button
+        (click)="createCheckoutSession()"
+        [disabled]="checkoutLoading()"
+        pButton
+        label="Pay Now"
+        [icon]="checkoutLoading() ? 'pi pi-spinner pi-spin' : 'pi pi-plus'"
+      ></button>
     }
   </div>
 </div>

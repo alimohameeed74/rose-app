@@ -23,13 +23,7 @@ export const routes: Route[] = [
     path: 'categories',
     loadChildren: () => import('./categories/categories.routes').then((r) => r.routes),
   },
-  {
-    path: 'notifications',
-    loadComponent: () =>
-      import('./notifications/pages/notifications/notifications.component').then(
-        (p) => p.NotificationsComponent,
-      ),
-  },
+
   {
     path: 'account',
     canActivate: [authGuard],
