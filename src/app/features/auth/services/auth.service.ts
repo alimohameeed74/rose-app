@@ -13,6 +13,7 @@ import { LoggedUserData } from '../models/store/logged-user-data.js';
 import { Router } from '@angular/router';
 import { ForgetPassword } from '../models/request/forget-password.js';
 import { ResetPassword } from '../models/request/reset-password.js';
+import { Role } from '../../../core/enums/role.enum.js';
 
 @Injectable({
   providedIn: 'root',
@@ -74,6 +75,7 @@ export class AuthService {
 
   init() {
     const token = sessionStorage.getItem('roseToken') as string;
+    const role = Role;
     if (token) {
       this.getUserProfile().subscribe({
         next: (user: User) => {
@@ -84,10 +86,14 @@ export class AuthService {
             userId: user.id,
           };
           this.setUser(userData, true);
+          if (userData.role === role.ADMIN) {
+            this.router.navigate(['/admin']);
+          }
         },
       });
     } else {
       this.setUser(null, false);
+      this.router.navigate(['/']);
     }
   }
 
@@ -98,7 +104,7 @@ export class AuthService {
 
   getUserProfile(): Observable<User> {
     return this.httpClient
-      .get<ApiResponse<{ user: User }>>(`${this.configService.devApiUrl_()}/users/profile`)
+      .get<ApiResponse<{ user: User }>>('https://rose-app.elevate-bootcamp.cloud/api/users/profile')
       .pipe(map((res) => res.payload.user));
   }
 }

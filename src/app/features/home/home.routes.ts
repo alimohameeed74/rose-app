@@ -1,5 +1,6 @@
 import { Route } from '@angular/router';
 import { authGuard } from '../../core/guards/auth/auth.guard.js';
+import { userGuard } from '../../core/guards/user/user.guard.js';
 
 export const routes: Route[] = [
   {
@@ -26,7 +27,7 @@ export const routes: Route[] = [
 
   {
     path: 'account',
-    canActivate: [authGuard],
+    canActivate: [authGuard, userGuard],
     loadComponent: () =>
       import('./account/pages/account-settings/account-settings.component').then(
         (p) => p.AccountSettingsComponent,
@@ -35,7 +36,7 @@ export const routes: Route[] = [
   },
   {
     path: 'orders',
-    canActivate: [authGuard],
+    canActivate: [authGuard, userGuard],
     loadComponent: () => import('./order/pages/list/list.component').then((p) => p.ListComponent),
   },
   {

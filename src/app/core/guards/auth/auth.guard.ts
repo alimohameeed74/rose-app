@@ -1,7 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { DailogService } from '../../../shared/services/attention-dialog/dailog.service.js';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);

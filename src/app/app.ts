@@ -12,8 +12,5 @@ import { LoaderComponent } from './shared/components/loader/loader.component';
   styleUrl: './app.css',
 })
 export class App implements OnInit {
-  private authService = inject(AuthService);
-  ngOnInit(): void {
-    this.authService.init();
-  }
+  ngOnInit() {}
 }

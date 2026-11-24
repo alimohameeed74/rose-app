@@ -10,6 +10,7 @@ import { ErrMessComponent } from '../../../../shared/components/err-mess/err-mes
 import { AuthResponse, User } from '../../models/response/auth-response.js';
 import { LoggedUserData } from '../../models/store/logged-user-data.js';
 import { MessageService } from 'primeng/api';
+import { Role } from '../../../../core/enums/role.enum.js';
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
@@ -29,6 +30,8 @@ export class SigninComponent implements OnInit {
   private router = inject(Router);
   private messageService = inject(MessageService);
   authService = inject(AuthService);
+
+  readonly role = Role;
 
   isLoading: WritableSignal<boolean> = signal(false);
   hidePassword: WritableSignal<boolean> = signal(true);
@@ -91,8 +94,10 @@ export class SigninComponent implements OnInit {
       summary: 'signedin successfully.',
       detail: 'Welcome to Rose app.',
     });
-    // check about user.role to decide whether navigate to home layout,
-    // or admin layout
-    this.router.navigate(['/']);
+    if (userData.role === this.role.ADMIN) {
+      this.router.navigate(['/admin']);
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 }

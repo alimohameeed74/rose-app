@@ -50,5 +50,9 @@ export const appConfig: ApplicationConfig = {
       const configService = inject(ConfigService);
       return configService.loadConfig();
     }),
+    provideAppInitializer(() => {
+      const authService = inject(AuthService);
+      return authService.init();
+    }),
   ],
 };
